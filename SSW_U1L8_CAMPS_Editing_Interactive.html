@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSW Unit 1, Lesson 8: Simple Revising &amp; Editing (CAMPS)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --coral: #E66B5D;
+  --coral-pale: #FDF0EE;
+  --teal: #3A7D8C;
+  --light-blue: #D7ECF0;
+  --blue-pale: #EBF5F8;
+  --yellow: #F3D25B;
+  --yellow-dark: #9E7F0A;
+  --white: #FFFFFF;
+  --dark: #1A1A2E;
+  --mid: #4A4A5A;
+  --gray: #6B7280;
+  --light: #8A8A9A;
+  --success: #22C55E;
+  --error: #EF4444;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Open Sans',sans-serif;background:#F8FAFC;color:var(--dark);min-height:100vh;display:flex;flex-direction:column}
+
+/* Progress Bar */
+.progress-bar{height:6px;background:#E5E7EB;position:fixed;top:0;left:0;right:0;z-index:100}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--coral));transition:width .4s ease}
+
+/* Star Counter */
+.star-counter{position:fixed;top:16px;right:20px;z-index:100;background:var(--white);border-radius:24px;padding:6px 16px;box-shadow:0 2px 8px rgba(0,0,0,.1);font-family:'Poppins',sans-serif;font-weight:600;font-size:16px;color:var(--yellow-dark);display:flex;align-items:center;gap:6px}
+.star-counter .star-icon{font-size:20px}
+.star-counter.animate .star-icon{animation:starPop .5s ease}
+@keyframes starPop{0%{transform:scale(1)}50%{transform:scale(1.5)}100%{transform:scale(1)}}
+
+/* Slide Container */
+.slide-container{flex:1;display:flex;align-items:center;justify-content:center;padding:60px 20px 100px}
+.slide{display:none;max-width:900px;width:100%;min-height:480px;background:var(--white);border-radius:20px;box-shadow:0 4px 24px rgba(0,0,0,.08);padding:48px;animation:fadeIn .4s ease}
+.slide.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Typography */
+.slide h1{font-family:'Poppins',sans-serif;font-size:28px;font-weight:700;color:var(--teal);margin-bottom:12px;line-height:1.3}
+.slide h2{font-family:'Poppins',sans-serif;font-size:22px;font-weight:600;color:var(--teal);margin-bottom:16px}
+.slide h3{font-family:'Poppins',sans-serif;font-size:18px;font-weight:600;color:var(--coral);margin-bottom:12px}
+.subtitle{font-family:'Poppins',sans-serif;font-size:16px;color:var(--mid);margin-bottom:20px;font-style:italic}
+.phase-label{display:inline-block;padding:4px 16px;border-radius:20px;font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+.phase-learn{background:var(--light-blue);color:var(--teal)}
+.phase-practice{background:var(--coral-pale);color:var(--coral)}
+.phase-review{background:var(--blue-pale);color:var(--teal)}
+
+/* Learning Goal */
+.learning-goal{background:var(--light-blue);border-left:4px solid var(--teal);border-radius:0 12px 12px 0;padding:16px 20px;font-family:'Poppins',sans-serif;font-size:15px;color:var(--dark);margin-top:20px}
+
+/* Concept Big */
+.concept-big{font-family:'Poppins',sans-serif;font-size:72px;font-weight:700;color:var(--teal);text-align:center;margin:40px 0 16px}
+.concept-sub{font-family:'Poppins',sans-serif;font-size:18px;color:var(--mid);text-align:center}
+
+/* Strategy Display */
+.strategy-grid{display:grid;gap:16px;margin-top:24px}
+.strategy-card{background:var(--white);border:2px solid var(--light-blue);border-radius:16px;padding:20px;display:flex;align-items:center;gap:16px;transition:all .3s}
+.strategy-card:hover{border-color:var(--teal);box-shadow:0 4px 16px rgba(58,125,140,.15)}
+.strategy-letter{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-size:28px;font-weight:700;color:var(--white);flex-shrink:0}
+.strategy-letter.c-bg{background:var(--coral)}
+.strategy-letter.a-bg{background:var(--teal)}
+.strategy-letter.m-bg{background:var(--yellow-dark)}
+.strategy-letter.p-bg{background:#6C5CE7}
+.strategy-letter.s-bg{background:#00B894}
+.strategy-info h4{font-family:'Poppins',sans-serif;font-size:16px;font-weight:600;color:var(--dark);margin-bottom:4px}
+.strategy-info p{font-family:'Poppins',sans-serif;font-size:14px;color:var(--mid)}
+
+/* MC Options */
+.mc-options{display:grid;gap:12px;margin-top:20px}
+.mc-option{background:var(--white);border:2px solid #E5E7EB;border-radius:14px;padding:16px 20px;font-family:'Poppins',sans-serif;font-size:15px;color:var(--dark);cursor:pointer;transition:all .2s;text-align:left}
+.mc-option:hover{border-color:var(--teal);background:var(--blue-pale)}
+.mc-option.selected{border-color:var(--teal);background:var(--light-blue)}
+.mc-option.correct{border-color:var(--success);background:#F0FDF4}
+.mc-option.incorrect{border-color:var(--error);background:#FEF2F2}
+.mc-option.dim{opacity:.5;pointer-events:none}
+
+/* Check Button */
+.check-btn{display:block;margin:20px auto 0;background:var(--teal);color:var(--white);border:none;border-radius:12px;padding:12px 36px;font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s}
+.check-btn:hover{background:#2D6470}
+.check-btn:disabled{background:#CBD5E1;cursor:not-allowed}
+
+/* Feedback */
+.feedback{margin-top:16px;padding:14px 20px;border-radius:12px;font-family:'Poppins',sans-serif;font-size:14px;display:none}
+.feedback.show{display:block;animation:fadeIn .3s ease}
+.feedback.correct{background:#F0FDF4;color:#166534;border:1px solid #BBF7D0}
+.feedback.incorrect{background:#FEF2F2;color:#991B1B;border:1px solid #FECACA}
+
+/* Error Finder Activity */
+.error-paragraph{background:var(--blue-pale);border-radius:16px;padding:24px 28px;margin:20px 0;font-family:'Poppins',sans-serif;font-size:16px;line-height:2;color:var(--dark)}
+.error-word{cursor:pointer;padding:2px 4px;border-radius:6px;transition:all .2s;position:relative}
+.error-word:hover{background:rgba(230,107,93,.15)}
+.error-word.flagged{background:var(--coral-pale);border:2px solid var(--coral);color:var(--coral);font-weight:600}
+.error-word.correct-flag{background:#F0FDF4;border:2px solid var(--success);color:#166534;font-weight:600}
+.error-word.missed{background:#FEF2F2;border:2px dashed var(--error);color:#991B1B}
+.error-instructions{font-family:'Open Sans',sans-serif;font-size:14px;color:var(--mid);margin-bottom:12px;font-style:italic}
+
+/* CAMPS Check Labels */
+.camps-check-label{display:inline-block;padding:6px 16px;border-radius:20px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;margin-bottom:12px}
+.camps-c{background:var(--coral-pale);color:var(--coral)}
+.camps-a{background:var(--light-blue);color:var(--teal)}
+.camps-m{background:#FFF8E1;color:var(--yellow-dark)}
+.camps-p{background:#F3E8FF;color:#6C5CE7}
+.camps-s{background:#E8FFF3;color:#00B894}
+
+/* Drag Sort */
+.sort-columns{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}
+.sort-column{background:var(--blue-pale);border-radius:16px;padding:16px;min-height:200px}
+.sort-column h4{font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;color:var(--teal);text-align:center;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--light-blue)}
+.sort-column.correct-col h4{color:var(--success)}
+.sort-column.incorrect-col h4{color:var(--coral)}
+.word-bank{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;min-height:48px;justify-content:center}
+.drag-word{background:var(--white);border:2px solid #E5E7EB;border-radius:10px;padding:8px 16px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;color:var(--dark);cursor:grab;transition:all .2s;user-select:none}
+.drag-word:hover{border-color:var(--teal);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.drag-word.in-col{margin-bottom:8px;cursor:grab}
+.drag-word.correct-word{border-color:var(--success);background:#F0FDF4}
+.drag-word.incorrect-word{border-color:var(--error);background:#FEF2F2}
+.drop-zone{min-height:40px;border:2px dashed #CBD5E1;border-radius:10px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;transition:all .2s}
+.drop-zone.drag-over{border-color:var(--teal);background:rgba(58,125,140,.08)}
+
+/* Review Cards */
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.review-card{border-radius:16px;padding:24px;cursor:pointer;transition:all .3s;min-height:120px;display:flex;align-items:center;justify-content:center;text-align:center}
+.review-card .card-front{font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;line-height:1.4}
+.review-card .card-back{display:none;font-family:'Poppins',sans-serif;font-size:14px;line-height:1.5}
+.review-card.flipped .card-front{display:none}
+.review-card.flipped .card-back{display:block}
+.rc-teal{background:var(--light-blue);border:2px solid var(--teal);color:var(--teal)}
+.rc-teal.flipped{background:var(--teal);color:var(--white)}
+.rc-coral{background:var(--coral-pale);border:2px solid var(--coral);color:var(--coral)}
+.rc-coral.flipped{background:var(--coral);color:var(--white)}
+.rc-yellow{background:#FFF8E1;border:2px solid var(--yellow);color:var(--yellow-dark)}
+.rc-yellow.flipped{background:var(--yellow);color:var(--dark)}
+.rc-blue{background:var(--blue-pale);border:2px solid #93C5FD;color:#2563EB}
+.rc-blue.flipped{background:#2563EB;color:var(--white)}
+
+/* Celebration */
+.celebration-title{font-family:'Poppins',sans-serif;font-size:32px;font-weight:700;color:var(--teal);text-align:center;margin-bottom:8px}
+.celebration-sub{font-family:'Poppins',sans-serif;font-size:16px;color:var(--mid);text-align:center;margin-bottom:32px}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.stat-card{background:var(--blue-pale);border-radius:16px;padding:20px;text-align:center}
+.stat-number{font-family:'Poppins',sans-serif;font-size:36px;font-weight:700;color:var(--teal)}
+.stat-label{font-family:'Open Sans',sans-serif;font-size:13px;color:var(--gray);margin-top:4px}
+.restart-btn{display:block;margin:0 auto;background:var(--coral);color:white;border:none;border-radius:12px;padding:14px 36px;font-family:'Poppins',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s}
+.restart-btn:hover{background:#D45A4D}
+
+/* Navigation */
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--white);box-shadow:0 -2px 12px rgba(0,0,0,.06);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100}
+.nav-btn{background:var(--teal);color:white;border:none;border-radius:10px;padding:10px 24px;font-family:'Open Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px}
+.nav-btn:hover{background:#2D6470}
+.nav-btn:disabled{background:#CBD5E1;cursor:not-allowed}
+.slide-counter{font-family:'Open Sans',sans-serif;font-size:14px;color:var(--gray)}
+
+/* Confetti */
+.confetti-piece{position:fixed;width:10px;height:10px;z-index:200;pointer-events:none}
+
+/* Responsive */
+@media(max-width:700px){.slide{padding:28px 20px}.slide h1{font-size:24px}.concept-big{font-size:48px}.review-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr}.sort-columns{grid-template-columns:1fr}.strategy-card{flex-direction:column;text-align:center}}
+@media(max-width:500px){.slide{padding:20px 16px;min-height:auto}.nav-btn{padding:8px 16px;font-size:14px}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="star-counter" id="starCounter"><span class="star-icon">⭐</span><span id="starCount">0</span></div>
+
+<div class="slide-container">
+
+<!-- SLIDE 1: Title -->
+<div class="slide active" id="slide-1">
+  <span class="phase-label phase-learn">LEARN</span>
+  <p style="font-family:'Open Sans';font-size:13px;color:var(--gray);margin-bottom:8px;">Structured Steps to Writing &bull; Unit 1: Building Basic Sentences</p>
+  <h1>Lesson 8: Simple Revising &amp; Editing (CAMPS)</h1>
+  <p class="subtitle">A systematic approach to checking your writing</p>
+  <div class="learning-goal">
+    <strong>🎯 Learning Goal:</strong> I can use the CAMPS strategy to check my writing for common errors and make my sentences better.
+  </div>
+</div>
+
+<!-- SLIDE 2: Concept Intro -->
+<div class="slide" id="slide-2">
+  <span class="phase-label phase-learn">LEARN</span>
+  <div class="concept-big">CAMPS</div>
+  <p class="concept-sub">Your editing checklist for better writing</p>
+</div>
+
+<!-- SLIDE 3: Review — Previous Lesson (Subject & Predicate) -->
+<div class="slide" id="slide-3">
+  <span class="phase-label phase-learn">LEARN</span>
+  <h2>🔍 Review: Subjects &amp; Predicates</h2>
+  <p style="font-family:'Poppins',sans-serif;font-size:15px;color:var(--mid);margin-bottom:16px;">In our last lesson, we learned about subjects and predicates. Let's do a quick check!</p>
+  <p style="font-family:'Poppins',sans-serif;font-size:16px;color:var(--dark);margin-bottom:8px;font-weight:600;">What is the <span style="color:var(--teal)">simple subject</span> of this sentence?</p>
+  <div style="background:var(--blue-pale);padding:16px 24px;border-radius:12px;margin-bottom:20px;font-family:'Poppins',sans-serif;font-size:18px;font-weight:500;text-align:center;color:var(--dark);">"The fluffy cat sleeps on the couch."</div>
+  <div class="mc-options" id="reviewMC">
+    <div class="mc-option" onclick="checkReviewMC(this,false)">The fluffy cat</div>
+    <div class="mc-option" onclick="checkReviewMC(this,true)">cat</div>
+    <div class="mc-option" onclick="checkReviewMC(this,false)">sleeps</div>
+    <div class="mc-option" onclick="checkReviewMC(this,false)">couch</div>
+  </div>
+  <div class="feedback" id="reviewFB"></div>
+</div>
+
+<!-- SLIDE 4: What is Editing? -->
+<div class="slide" id="slide-4">
+  <span class="phase-label phase-learn">LEARN</span>
+  <h2>What is Editing?</h2>
+  <p style="font-family:'Poppins',sans-serif;font-size:16px;color:var(--dark);margin-bottom:24px;">Editing means <strong>finding and fixing errors</strong> in your writing. Even professional writers edit!</p>
+  <div style="display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:28px;">
+    <div style="background:var(--light-blue);border-radius:14px;padding:20px 28px;text-align:center;">
+      <div style="font-size:32px;margin-bottom:8px;">📝</div>
+      <div style="font-family:'Poppins',sans-serif;font-weight:600;color:var(--teal);font-size:15px;">First Draft</div>
+      <div style="font-family:'Poppins',sans-serif;font-size:13px;color:var(--mid);">Write your ideas</div>
+    </div>
+    <div style="font-size:28px;color:var(--gray);">→</div>
+    <div style="background:var(--coral-pale);border-radius:14px;padding:20px 28px;text-align:center;">
+      <div style="font-size:32px;margin-bottom:8px;">🔍</div>
+      <div style="font-family:'Poppins',sans-serif;font-weight:600;color:var(--coral);font-size:15px;">Edit</div>
+      <div style="font-family:'Poppins',sans-serif;font-size:13px;color:var(--mid);">Find &amp; fix errors</div>
+    </div>
+    <div style="font-size:28px;color:var(--gray);">→</div>
+    <div style="background:#F0FDF4;border-radius:14px;padding:20px 28px;text-align:center;">
+      <div style="font-size:32px;margin-bottom:8px;">✨</div>
+      <div style="font-family:'Poppins',sans-serif;font-weight:600;color:#166534;font-size:15px;">Final Draft</div>
+      <div style="font-family:'Poppins',sans-serif;font-size:13px;color:var(--mid);">Polished &amp; correct</div>
+    </div>
+  </div>
+  <div style="background:#FFF8E1;border-left:4px solid var(--yellow);border-radius:0 12px 12px 0;padding:14px 20px;font-family:'Poppins',sans-serif;font-size:14px;color:var(--dark);">
+    <strong>💡 The problem:</strong> There are so many things to check! How do you remember them all? That's where <strong>CAMPS</strong> comes in!
+  </div>
+</div>
+
+<!-- SLIDE 5: Strategy Display — CAMPS -->
+<div class="slide" id="slide-5">
+  <span class="phase-label phase-learn">LEARN</span>
+  <h2>The CAMPS Editing Strategy</h2>
+  <p style="font-family:'Poppins',sans-serif;font-size:15px;color:var(--mid);margin-bottom:8px;">Check your writing <strong>FIVE</strong> times — once for each letter:</p>
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <div class="strategy-letter c-bg">C</div>
+      <div class="strategy-info"><h4>Capitals</h4><p>Sentence beginnings, proper nouns, the word "I"</p></div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-letter a-bg">A</div>
+      <div class="strategy-info"><h4>Agreement</h4><p>Subjects and verbs match (singular ↔ singular, plural ↔ plural)</p></div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-letter m-bg">M</div>
+      <div class="strategy-info"><h4>Missing Words</h4><p>Read out loud — did you skip any words?</p></div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-letter p-bg">P</div>
+      <div class="strategy-info"><h4>Punctuation</h4><p>Every sentence ends with . ? or !</p></div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-letter s-bg">S</div>
+      <div class="strategy-info"><h4>Spelling</h4><p>Correct spelling, homophones (there/their/they're)</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: Quick Check — CAMPS Meaning -->
+<div class="slide" id="slide-6">
+  <span class="phase-label phase-learn">LEARN</span>
+  <h2>✅ Quick Check: What Does CAMPS Stand For?</h2>
+  <p style="font-family:'Poppins',sans-serif;font-size:15px;color:var(--mid);margin-bottom:16px;">Which one correctly lists what CAMPS stands for?</p>
+  <div class="mc-options" id="campsMC">
+    <div class="mc-option" onclick="checkCampsMC(this,false)">Capitals, Adjectives, Marks, Paragraphs, Sentences</div>
+    <div class="mc-option" onclick="checkCampsMC(this,true)">Capitals, Agreement, Missing Words, Punctuation, Spelling</div>
+    <div class="mc-option" onclick="checkCampsMC(this,false)">Commas, Agreement, Meaning, Periods, Structure</div>
+    <div class="mc-option" onclick="checkCampsMC(this,false)">Capitals, Adverbs, Missing Words, Predicates, Subjects</div>
+  </div>
+  <div class="feedback" id="campsFB"></div>
+</div>
+
+<!-- SLIDE 7: Practice 1 — C Check (Error Finder) -->
+<div class="slide" id="slide-7">
+  <span class="phase-label phase-practice">PRACTICE</span>
+  <span class="camps-check-label camps-c">C = CAPITALS CHECK</span>
+  <h2>Find the Capital Letter Errors</h2>
+  <p class="error-instructions">Click on each word that has a capital letter error (needs a capital or shouldn't have one).</p>
+  <div class="error-paragraph" id="cCheckPara"></div>
+  <button class="check-btn" id="cCheckBtn" onclick="checkCErrors()">Check My Answers</button>
+  <div class="feedback" id="cCheckFB"></div>
+</div>
+
+<!-- SLIDE 8: Practice 2 — A Check (Agreement MC) -->
+<div class="slide" id="slide-8">
+  <span class="phase-label phase-practice">PRACTICE</span>
+  <span class="camps-check-label camps-a">A = AGREEMENT CHECK</span>
+  <h2>Fix the Agreement Error</h2>
+  <p style="font-family:'Poppins',sans-serif;font-size:15px;color:var(--mid);margin-bottom:16px;">Which sentence has a subject-verb agreement error?</p>
+  <div class="mc-options" id="agreeMC">
+    <div class="mc-option" onclick="checkAgreeMC(this,false)">The dogs bark at the mailman.</div>
+    <div class="mc-option" onclick="checkAgreeMC(this,true)">The birds was singing in the tree.</div>
+    <div class="mc-option" onclick="checkAgreeMC(this,false)">She runs every morning.</div>
+    <div class="mc-option" onclick="checkAgreeMC(this,false)">They were happy about the news.</div>
+  </div>
+  <div class="feedback" id="agreeFB"></div>
+  <div id="agreeFollowUp" style="display:none;margin-top:16px;">
+    <p style="font-family:'Poppins',sans-serif;font-size:15px;color:var(--dark);margin-bottom:12px;font-weight:600;">How should we fix it?</p>
+    <div class="mc-options" id="agreeFixMC">
+      <div class="mc-option" onclick="checkAgreeFix(this,false)">The bird was singing in the tree.</div>
+      <div class="mc-option" onclick="checkAgreeFix(this,true)">The birds were singing in the tree.</div>
+      <div class="mc-option" onclick="checkAgreeFix(this,false)">The birds was sing in the tree.</div>
+    </div>
+    <div class="feedback" id="agreeFixFB"></div>
+  </div>
+</div>
+
+<!-- SLIDE 9: Practice 3 — M & P Check (Error Finder) -->
+<div class="slide" id="slide-9">
+  <span class="phase-label phase-practice">PRACTICE</span>
+  <span class="camps-check-label camps-m">M = MISSING WORDS</span> <span class="camps-check-label camps-p">P = PUNCTUATION</span>
+  <h2>Find Missing Words &amp; Punctuation Errors</h2>
+  <p class="error-instructions">Click on spots where a word is missing or punctuation is wrong/missing. Look carefully!</p>
+  <div class="error-paragraph" id="mpCheckPara"></div>
+  <button class="check-btn" id="mpCheckBtn" onclick="checkMPErrors()">Check My Answers</button>
+  <div class="feedback" id="mpCheckFB"></div>
+</div>
+
+<!-- SLIDE 10: Practice 4 — Full CAMPS Editing (Sort) -->
+<div class="slide" id="slide-10">
+  <span class="phase-label phase-practice">PRACTICE</span>
+  <h2>🔧 CAMPS Sorting Challenge</h2>
+  <p style="font-family:'Poppins',sans-serif;font-size:14px;color:var(--mid);margin-bottom:16px;">Sort each error into the correct CAMPS category. Drag each error to the right column!</p>
+  <div class="word-bank" id="sortBank"></div>
+  <div class="sort-columns" id="sortCols" style="grid-template-columns:repeat(5,1fr)"></div>
+  <button class="check-btn" id="sortCheckBtn" onclick="checkSort()" style="display:none">Check My Answers</button>
+  <div class="feedback" id="sortFB"></div>
+</div>
+
+<!-- SLIDE 11: Tricky Concepts -->
+<div class="slide" id="slide-11">
+  <span class="phase-label phase-learn">LEARN</span>
+  <h2>💡 CAMPS Tips &amp; Tricks</h2>
+  <div style="display:grid;gap:16px;margin-top:20px;">
+    <div style="background:var(--coral-pale);border-radius:14px;padding:18px 24px;display:flex;gap:14px;align-items:flex-start;">
+      <span style="font-size:24px;">🔑</span>
+      <div>
+        <div style="font-family:'Poppins',sans-serif;font-weight:600;color:var(--coral);font-size:15px;margin-bottom:4px;">One Check at a Time</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:14px;color:var(--dark);">Don't try to find everything at once! Read through <strong>five separate times</strong>, focusing on just ONE letter each time.</div>
+      </div>
+    </div>
+    <div style="background:var(--light-blue);border-radius:14px;padding:18px 24px;display:flex;gap:14px;align-items:flex-start;">
+      <span style="font-size:24px;">🎨</span>
+      <div>
+        <div style="font-family:'Poppins',sans-serif;font-weight:600;color:var(--teal);font-size:15px;margin-bottom:4px;">Color Code Your Edits</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:14px;color:var(--dark);">Use a <strong>different colored pencil</strong> for each check so you can see what types of errors you found.</div>
+      </div>
+    </div>
+    <div style="background:#FFF8E1;border-radius:14px;padding:18px 24px;display:flex;gap:14px;align-items:flex-start;">
+      <span style="font-size:24px;">🗣️</span>
+      <div>
+        <div style="font-family:'Poppins',sans-serif;font-weight:600;color:var(--yellow-dark);font-size:15px;margin-bottom:4px;">Read Out Loud for M Check</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:14px;color:var(--dark);">Your ears catch missing words that your eyes skip over. Reading aloud is the best trick for finding gaps!</div>
+      </div>
+    </div>
+    <div style="background:var(--blue-pale);border-radius:14px;padding:18px 24px;display:flex;gap:14px;align-items:flex-start;">
+      <span style="font-size:24px;">🔄</span>
+      <div>
+        <div style="font-family:'Poppins',sans-serif;font-weight:600;color:#2563EB;font-size:15px;margin-bottom:4px;">Read Backwards for S Check</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:14px;color:var(--dark);">Reading backwards forces you to focus on <strong>each individual word</strong> instead of the meaning — great for catching spelling errors!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 12: Review Cards -->
+<div class="slide" id="slide-12">
+  <span class="phase-label phase-review">REVIEW</span>
+  <h2>📋 Lesson Review</h2>
+  <p style="font-family:'Poppins',sans-serif;font-size:14px;color:var(--mid);margin-bottom:16px;">Click each card to reveal the answer!</p>
+  <div class="review-grid">
+    <div class="review-card rc-teal" onclick="this.classList.toggle('flipped')">
+      <div class="card-front">What does CAMPS stand for?</div>
+      <div class="card-back"><strong>C</strong>apitals, <strong>A</strong>greement, <strong>M</strong>issing Words, <strong>P</strong>unctuation, <strong>S</strong>pelling</div>
+    </div>
+    <div class="review-card rc-coral" onclick="this.classList.toggle('flipped')">
+      <div class="card-front">How many times do you read through?</div>
+      <div class="card-back"><strong>Five times</strong> — once for each letter of CAMPS. Focus on ONE type of error each time!</div>
+    </div>
+    <div class="review-card rc-yellow" onclick="this.classList.toggle('flipped')">
+      <div class="card-front">Why not check for everything at once?</div>
+      <div class="card-back">Your brain gets <strong>overwhelmed</strong> and misses mistakes. Focusing on one thing at a time catches more errors!</div>
+    </div>
+    <div class="review-card rc-blue" onclick="this.classList.toggle('flipped')">
+      <div class="card-front">Best trick for the M check?</div>
+      <div class="card-back"><strong>Read out loud!</strong> Your ears catch missing words that your eyes skip over.</div>
+    </div>
+    <div class="review-card rc-teal" onclick="this.classList.toggle('flipped')">
+      <div class="card-front">What does the A in CAMPS check for?</div>
+      <div class="card-back"><strong>Agreement</strong> — making sure subjects and verbs match. Singular subjects → singular verbs. Plural → plural.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 13: Celebration -->
+<div class="slide" id="slide-13">
+  <span class="phase-label phase-review">REVIEW</span>
+  <div style="text-align:center;font-size:48px;margin-bottom:12px;">🎉</div>
+  <div class="celebration-title">Unit 1 Complete!</div>
+  <div class="celebration-sub">You've finished ALL of Unit 1 — Building Basic Sentences! Amazing work!</div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number" id="finalStars">0</div>
+      <div class="stat-label">Stars Earned ⭐</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="finalActivities">0</div>
+      <div class="stat-label">Activities Completed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">8</div>
+      <div class="stat-label">Lessons Mastered</div>
+    </div>
+  </div>
+  <div style="background:var(--light-blue);border-radius:14px;padding:20px;text-align:center;margin-bottom:24px;">
+    <p style="font-family:'Poppins',sans-serif;font-size:15px;color:var(--teal);font-weight:600;margin-bottom:8px;">Skills You've Learned in Unit 1:</p>
+    <p style="font-family:'Poppins',sans-serif;font-size:14px;color:var(--dark);">CAPS Strategy • Nouns (NAME IT) • Verbs • Common & Proper Nouns • Complete Sentences • Subjects & Predicates • Formal Grammar Terms • CAMPS Editing</p>
+  </div>
+  <p style="font-family:'Poppins',sans-serif;font-size:15px;color:var(--mid);text-align:center;margin-bottom:20px;"><strong>Next up:</strong> Unit 2 — Expanding Sentences with adjectives, adverbs, and more!</p>
+  <button class="restart-btn" onclick="restartAll()">🔄 Start Over</button>
+</div>
+
+</div><!-- end slide-container -->
+
+<!-- Navigation Bar -->
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Back</button>
+  <span class="slide-counter" id="slideCounter">1 / 13</span>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA-DRIVEN CONTENT
+// ═══════════════════════════════════════════════
+const L = {
+  totalSlides: 13,
+  // C-Check error finder words
+  cCheckWords: [
+    {w:"my",err:true,fix:"My"},
+    {w:"friend",err:false},
+    {w:"sarah",err:true,fix:"Sarah"},
+    {w:"went",err:false},
+    {w:"to",err:false},
+    {w:"the",err:false},
+    {w:"park",err:false},
+    {w:"on",err:false},
+    {w:"saturday",err:true,fix:"Saturday"},
+    {w:".",err:false},
+    {w:"she",err:true,fix:"She"},
+    {w:"played",err:false},
+    {w:"with",err:false},
+    {w:"her",err:false},
+    {w:"Dog",err:true,fix:"dog"},
+    {w:"named",err:false},
+    {w:"buddy",err:true,fix:"Buddy"},
+    {w:".",err:false}
+  ],
+  // M&P check — sentences with gaps and punctuation issues
+  mpSentences: [
+    {text:"I went __ the store to buy apples", hasGap:true, gapWord:"to", gapIndex:2},
+    {text:"My dog plays in yard every day", hasGap:true, gapWord:"the", gapIndex:3},
+    {text:"She likes to read books", punctErr:true, correctPunct:"."},
+  ],
+  // Sort errors into CAMPS categories
+  sortItems: [
+    {text:"monday → Monday", cat:"C"},
+    {text:"they was → they were", cat:"A"},
+    {text:"went __ store → went to the store", cat:"M"},
+    {text:"I love pizza [no period]", cat:"P"},
+    {text:"ther → their", cat:"S"},
+    {text:"jake → Jake", cat:"C"},
+    {text:"the dogs barks → the dogs bark", cat:"A"},
+    {text:"Where are you going. → ?", cat:"P"},
+    {text:"I like to reed → read", cat:"S"},
+    {text:"My dog plays in __ yard", cat:"M"}
+  ],
+  sortCats: [
+    {id:"C",label:"C",color:"var(--coral)"},
+    {id:"A",label:"A",color:"var(--teal)"},
+    {id:"M",label:"M",color:"var(--yellow-dark)"},
+    {id:"P",label:"P",color:"#6C5CE7"},
+    {id:"S",label:"S",color:"#00B894"}
+  ]
+};
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let currentSlide = 1;
+let stars = 0;
+let activitiesCompleted = 0;
+let earnedStars = {};
+
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+function showSlide(n) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  const slide = document.getElementById('slide-' + n);
+  if (slide) slide.classList.add('active');
+  currentSlide = n;
+  document.getElementById('slideCounter').textContent = n + ' / ' + L.totalSlides;
+  document.getElementById('prevBtn').disabled = n === 1;
+  document.getElementById('nextBtn').disabled = n === L.totalSlides;
+  document.getElementById('progressFill').style.width = ((n / L.totalSlides) * 100) + '%';
+  if (n === L.totalSlides) {
+    document.getElementById('finalStars').textContent = stars;
+    document.getElementById('finalActivities').textContent = activitiesCompleted;
+    fireConfetti();
+  }
+}
+
+function changeSlide(dir) {
+  const next = currentSlide + dir;
+  if (next >= 1 && next <= L.totalSlides) showSlide(next);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+});
+
+// ═══════════════════════════════════════════════
+// STARS
+// ═══════════════════════════════════════════════
+function addStars(n, id) {
+  if (earnedStars[id]) return;
+  earnedStars[id] = true;
+  stars += n;
+  const el = document.getElementById('starCount');
+  el.textContent = stars;
+  const sc = document.getElementById('starCounter');
+  sc.classList.add('animate');
+  setTimeout(() => sc.classList.remove('animate'), 600);
+}
+
+// ═══════════════════════════════════════════════
+// CONFETTI
+// ═══════════════════════════════════════════════
+function fireConfetti() {
+  const colors = ['#E66B5D','#3A7D8C','#F3D25B','#6C5CE7','#00B894','#FF6B8A'];
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random()*100 + 'vw';
+    c.style.top = '-20px';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.borderRadius = Math.random()>.5?'50%':'2px';
+    c.style.width = (6+Math.random()*8)+'px';
+    c.style.height = (6+Math.random()*8)+'px';
+    document.body.appendChild(c);
+    const dur = 1500 + Math.random()*2000;
+    const drift = (Math.random()-.5)*200;
+    c.animate([
+      {transform:'translateY(0) rotate(0deg)',opacity:1},
+      {transform:`translateY(${window.innerHeight+50}px) translateX(${drift}px) rotate(${Math.random()*720}deg)`,opacity:0}
+    ],{duration:dur,easing:'cubic-bezier(.25,.46,.45,.94)'});
+    setTimeout(()=>c.remove(), dur);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// SLIDE 3: Review MC
+// ═══════════════════════════════════════════════
+function checkReviewMC(el, correct) {
+  const opts = document.querySelectorAll('#reviewMC .mc-option');
+  opts.forEach(o => { o.classList.add('dim'); o.style.pointerEvents='none'; });
+  el.classList.remove('dim');
+  const fb = document.getElementById('reviewFB');
+  if (correct) {
+    el.classList.add('correct');
+    fb.className = 'feedback correct show';
+    fb.innerHTML = '✅ <strong>Correct!</strong> "Cat" is the simple subject — the key noun doing the action. "The fluffy cat" is the complete subject.';
+    addStars(1, 'review');
+  } else {
+    el.classList.add('incorrect');
+    opts.forEach(o => { if (o.textContent === 'cat') o.classList.add('correct'); });
+    fb.className = 'feedback incorrect show';
+    fb.innerHTML = '❌ Not quite! The simple subject is <strong>"cat"</strong> — the main noun. "The fluffy" are describing words that make up the complete subject.';
+  }
+}
+
+// ═══════════════════════════════════════════════
+// SLIDE 6: CAMPS MC
+// ═══════════════════════════════════════════════
+function checkCampsMC(el, correct) {
+  const opts = document.querySelectorAll('#campsMC .mc-option');
+  opts.forEach(o => { o.classList.add('dim'); o.style.pointerEvents='none'; });
+  el.classList.remove('dim');
+  const fb = document.getElementById('campsFB');
+  if (correct) {
+    el.classList.add('correct');
+    fb.className = 'feedback correct show';
+    fb.innerHTML = '✅ <strong>Correct!</strong> CAMPS = Capitals, Agreement, Missing Words, Punctuation, Spelling!';
+    addStars(1, 'campsmc');
+  } else {
+    el.classList.add('incorrect');
+    opts[1].classList.add('correct');
+    fb.className = 'feedback incorrect show';
+    fb.innerHTML = '❌ Not quite. CAMPS stands for <strong>Capitals, Agreement, Missing Words, Punctuation, Spelling</strong>.';
+  }
+}
+
+// ═══════════════════════════════════════════════
+// SLIDE 7: C-Check Error Finder
+// ═══════════════════════════════════════════════
+function buildCCheck() {
+  const para = document.getElementById('cCheckPara');
+  let html = '';
+  L.cCheckWords.forEach((w, i) => {
+    if (w.w === '.') {
+      html += '<span>.</span> ';
+    } else {
+      html += `<span class="error-word" id="cw${i}" onclick="toggleCFlag(${i})">${w.w}</span> `;
+    }
+  });
+  para.innerHTML = html;
+}
+
+function toggleCFlag(i) {
+  const el = document.getElementById('cw'+i);
+  if (el.classList.contains('correct-flag') || el.classList.contains('missed')) return;
+  el.classList.toggle('flagged');
+  // Show check button when at least one flagged
+  const anyFlagged = document.querySelector('.error-word.flagged');
+  document.getElementById('cCheckBtn').style.display = anyFlagged ? 'block' : 'block';
+}
+
+function checkCErrors() {
+  let correct = 0; let total = 0; let wrong = 0;
+  L.cCheckWords.forEach((w, i) => {
+    const el = document.getElementById('cw'+i);
+    if (!el) return;
+    el.style.pointerEvents = 'none';
+    if (w.err) {
+      total++;
+      if (el.classList.contains('flagged')) { el.classList.remove('flagged'); el.classList.add('correct-flag'); correct++; }
+      else { el.classList.add('missed'); }
+    } else {
+      if (el.classList.contains('flagged')) { el.classList.remove('flagged'); el.classList.add('missed'); wrong++; }
+    }
+  });
+  document.getElementById('cCheckBtn').disabled = true;
+  const fb = document.getElementById('cCheckFB');
+  if (correct === total && wrong === 0) {
+    fb.className = 'feedback correct show';
+    fb.innerHTML = `✅ <strong>Perfect!</strong> You found all ${total} capital errors! "my→My", "sarah→Sarah", "saturday→Saturday", "she→She", "Dog→dog", "buddy→Buddy"`;
+    addStars(2, 'ccheck');
+  } else {
+    fb.className = 'feedback incorrect show';
+    fb.innerHTML = `🔍 You found <strong>${correct} of ${total}</strong> capital errors. Green = correct finds. Dashed red = ones you missed. Errors: my→My, sarah→Sarah, saturday→Saturday, she→She, Dog→dog (lowercase!), buddy→Buddy (name).`;
+    if (correct >= total - 1) addStars(1, 'ccheck');
+  }
+  activitiesCompleted++;
+}
+
+// ═══════════════════════════════════════════════
+// SLIDE 8: Agreement MC
+// ═══════════════════════════════════════════════
+function checkAgreeMC(el, correct) {
+  const opts = document.querySelectorAll('#agreeMC .mc-option');
+  opts.forEach(o => { o.classList.add('dim'); o.style.pointerEvents='none'; });
+  el.classList.remove('dim');
+  const fb = document.getElementById('agreeFB');
+  if (correct) {
+    el.classList.add('correct');
+    fb.className = 'feedback correct show';
+    fb.innerHTML = '✅ <strong>Correct!</strong> "The birds was singing" has an agreement error. "Birds" is plural but "was" is singular.';
+    addStars(1, 'agreeFind');
+    document.getElementById('agreeFollowUp').style.display = 'block';
+  } else {
+    el.classList.add('incorrect');
+    opts[1].classList.add('correct');
+    fb.className = 'feedback incorrect show';
+    fb.innerHTML = '❌ Look again! <strong>"The birds was singing"</strong> — "birds" is plural, so it needs "were" not "was."';
+    document.getElementById('agreeFollowUp').style.display = 'block';
+  }
+}
+
+function checkAgreeFix(el, correct) {
+  const opts = document.querySelectorAll('#agreeFixMC .mc-option');
+  opts.forEach(o => { o.classList.add('dim'); o.style.pointerEvents='none'; });
+  el.classList.remove('dim');
+  const fb = document.getElementById('agreeFixFB');
+  if (correct) {
+    el.classList.add('correct');
+    fb.className = 'feedback correct show';
+    fb.innerHTML = '✅ <strong>Right!</strong> "The birds <strong>were</strong> singing in the tree." Plural subject (birds) matches plural verb (were).';
+    addStars(1, 'agreeFix');
+    activitiesCompleted++;
+  } else {
+    el.classList.add('incorrect');
+    opts[1].classList.add('correct');
+    fb.className = 'feedback incorrect show';
+    fb.innerHTML = '❌ The correct fix is: "The birds <strong>were</strong> singing in the tree." We change the verb to match the plural subject.';
+    activitiesCompleted++;
+  }
+}
+
+// ═══════════════════════════════════════════════
+// SLIDE 9: M&P Check Error Finder
+// ═══════════════════════════════════════════════
+function buildMPCheck() {
+  const para = document.getElementById('mpCheckPara');
+  // Sentence 1: "I went [gap] the store to buy apples."
+  // Sentence 2: "My dog plays in [gap] yard every day."
+  // Sentence 3: "She likes to read books[no period]"
+  let html = '';
+  html += '<span class="error-word" id="mp0" onclick="toggleMPFlag(0)">I went</span> ';
+  html += '<span class="error-word" id="mp1" onclick="toggleMPFlag(1)" style="border:2px dashed #CBD5E1;padding:2px 12px;">___</span> ';
+  html += '<span>the store to buy apples.</span> ';
+  html += '<span class="error-word" id="mp2" onclick="toggleMPFlag(2)">My dog plays in</span> ';
+  html += '<span class="error-word" id="mp3" onclick="toggleMPFlag(3)" style="border:2px dashed #CBD5E1;padding:2px 12px;">___</span> ';
+  html += '<span>yard every day.</span> ';
+  html += '<span class="error-word" id="mp4" onclick="toggleMPFlag(4)">She likes to read books</span>';
+  // The errors: mp1 = missing "to", mp3 = missing "the", mp4 = missing period
+  para.innerHTML = html;
+}
+
+const mpAnswers = {0:false, 1:true, 2:false, 3:true, 4:true};
+
+function toggleMPFlag(i) {
+  const el = document.getElementById('mp'+i);
+  if (el.classList.contains('correct-flag') || el.classList.contains('missed')) return;
+  el.classList.toggle('flagged');
+}
+
+function checkMPErrors() {
+  let correct = 0; let total = 0; let wrong = 0;
+  Object.keys(mpAnswers).forEach(k => {
+    const el = document.getElementById('mp'+k);
+    el.style.pointerEvents = 'none';
+    if (mpAnswers[k]) {
+      total++;
+      if (el.classList.contains('flagged')) { el.classList.remove('flagged'); el.classList.add('correct-flag'); correct++; }
+      else { el.classList.add('missed'); }
+    } else {
+      if (el.classList.contains('flagged')) { el.classList.remove('flagged'); el.classList.add('missed'); wrong++; }
+    }
+  });
+  document.getElementById('mpCheckBtn').disabled = true;
+  const fb = document.getElementById('mpCheckFB');
+  if (correct === total && wrong === 0) {
+    fb.className = 'feedback correct show';
+    fb.innerHTML = '✅ <strong>Perfect!</strong> You found all 3 errors! Missing "to" (M), missing "the" (M), and missing period (P).';
+    addStars(2, 'mpcheck');
+  } else {
+    fb.className = 'feedback incorrect show';
+    fb.innerHTML = `🔍 You found <strong>${correct} of ${total}</strong>. The errors: 1st gap = missing "to" (I went <strong>to</strong> the store), 2nd gap = missing "the" (plays in <strong>the</strong> yard), last sentence = missing period at end.`;
+    if (correct >= 2) addStars(1, 'mpcheck');
+  }
+  activitiesCompleted++;
+}
+
+// ═══════════════════════════════════════════════
+// SLIDE 10: CAMPS Sort
+// ═══════════════════════════════════════════════
+let dragItem = null;
+
+function buildSort() {
+  const bank = document.getElementById('sortBank');
+  const cols = document.getElementById('sortCols');
+
+  // Shuffle items
+  const items = [...L.sortItems].sort(() => Math.random() - 0.5);
+  items.forEach((item, i) => {
+    const d = document.createElement('div');
+    d.className = 'drag-word';
+    d.textContent = item.text;
+    d.dataset.cat = item.cat;
+    d.dataset.idx = i;
+    d.draggable = true;
+    d.addEventListener('dragstart', e => { dragItem = d; e.dataTransfer.effectAllowed = 'move'; d.style.opacity = '0.5'; });
+    d.addEventListener('dragend', () => { d.style.opacity = '1'; dragItem = null; });
+    // Touch support
+    d.addEventListener('click', () => handleTapSort(d));
+    bank.appendChild(d);
+  });
+
+  // Create columns
+  L.sortCats.forEach(cat => {
+    const col = document.createElement('div');
+    col.className = 'sort-column';
+    col.innerHTML = `<h4 style="color:${cat.color}">${cat.label}</h4>`;
+    const dz = document.createElement('div');
+    dz.className = 'drop-zone';
+    dz.dataset.cat = cat.id;
+    dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+    dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+    dz.addEventListener('drop', e => {
+      e.preventDefault();
+      dz.classList.remove('drag-over');
+      if (dragItem) { dz.appendChild(dragItem); dragItem.classList.add('in-col'); checkSortReady(); }
+    });
+    col.appendChild(dz);
+    cols.appendChild(col);
+  });
+}
+
+let selectedSortItem = null;
+function handleTapSort(d) {
+  if (d.parentElement.classList.contains('drop-zone')) {
+    // Move back to bank
+    document.getElementById('sortBank').appendChild(d);
+    d.classList.remove('in-col');
+    checkSortReady();
+    return;
+  }
+  if (selectedSortItem === d) {
+    d.style.outline = '';
+    selectedSortItem = null;
+    return;
+  }
+  if (selectedSortItem) selectedSortItem.style.outline = '';
+  selectedSortItem = d;
+  d.style.outline = '3px solid var(--teal)';
+  // Next click on a column drops it
+  document.querySelectorAll('.drop-zone').forEach(dz => {
+    dz.onclick = () => {
+      dz.appendChild(d);
+      d.classList.add('in-col');
+      d.style.outline = '';
+      selectedSortItem = null;
+      document.querySelectorAll('.drop-zone').forEach(z => z.onclick = null);
+      checkSortReady();
+    };
+  });
+}
+
+function checkSortReady() {
+  const inBank = document.querySelectorAll('#sortBank .drag-word');
+  document.getElementById('sortCheckBtn').style.display = inBank.length === 0 ? 'block' : 'none';
+}
+
+function checkSort() {
+  let correct = 0;
+  document.querySelectorAll('.drop-zone').forEach(dz => {
+    const cat = dz.dataset.cat;
+    dz.querySelectorAll('.drag-word').forEach(w => {
+      w.style.pointerEvents = 'none';
+      w.draggable = false;
+      if (w.dataset.cat === cat) { w.classList.add('correct-word'); correct++; }
+      else { w.classList.add('incorrect-word'); }
+    });
+  });
+  document.getElementById('sortCheckBtn').disabled = true;
+  const fb = document.getElementById('sortFB');
+  const total = L.sortItems.length;
+  if (correct === total) {
+    fb.className = 'feedback correct show';
+    fb.innerHTML = `✅ <strong>Perfect!</strong> You sorted all ${total} errors into the right CAMPS category!`;
+    addStars(3, 'sort');
+    fireConfetti();
+  } else {
+    fb.className = 'feedback incorrect show';
+    fb.innerHTML = `🔍 You got <strong>${correct} of ${total}</strong> correct. Green = right category, red = wrong category. Keep practicing!`;
+    if (correct >= total - 2) addStars(2, 'sort');
+    else if (correct >= total / 2) addStars(1, 'sort');
+  }
+  activitiesCompleted++;
+}
+
+// ═══════════════════════════════════════════════
+// RESTART
+// ═══════════════════════════════════════════════
+function restartAll() {
+  stars = 0;
+  activitiesCompleted = 0;
+  earnedStars = {};
+  document.getElementById('starCount').textContent = '0';
+
+  // Reset all MC
+  document.querySelectorAll('.mc-option').forEach(o => {
+    o.classList.remove('selected','correct','incorrect','dim');
+    o.style.pointerEvents = '';
+  });
+  document.querySelectorAll('.feedback').forEach(f => { f.className = 'feedback'; f.innerHTML = ''; });
+
+  // Reset C-Check
+  buildCCheck();
+  document.getElementById('cCheckBtn').disabled = false;
+
+  // Reset Agreement
+  document.getElementById('agreeFollowUp').style.display = 'none';
+
+  // Reset M&P
+  buildMPCheck();
+  document.getElementById('mpCheckBtn').disabled = false;
+
+  // Reset Sort
+  document.getElementById('sortBank').innerHTML = '';
+  document.getElementById('sortCols').innerHTML = '';
+  document.getElementById('sortCheckBtn').style.display = 'none';
+  document.getElementById('sortCheckBtn').disabled = false;
+  document.getElementById('sortFB').className = 'feedback';
+  buildSort();
+
+  // Reset review cards
+  document.querySelectorAll('.review-card').forEach(c => c.classList.remove('flipped'));
+
+  showSlide(1);
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+buildCCheck();
+buildMPCheck();
+buildSort();
+showSlide(1);
+</script>
+</body>
+</html>

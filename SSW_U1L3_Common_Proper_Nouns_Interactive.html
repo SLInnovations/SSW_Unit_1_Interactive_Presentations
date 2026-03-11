@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSW Unit 1, Lesson 3: Common vs. Proper Nouns</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--coral:#E66B5D;--teal:#3A7D8C;--light-blue:#D7ECF0;--yellow:#F3D25B;--dark:#1A1A2E;--white:#FFFFFF;--blue-pale:#EBF5F8;--coral-pale:#FDF0EE;--yellow-dark:#9E7F0A;--gray:#666;--light-gray:#f5f5f5}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Open Sans',sans-serif;background:var(--light-gray);color:var(--dark);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+.progress-bar{position:fixed;top:0;left:0;width:100%;height:6px;background:#ddd;z-index:100}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--coral));transition:width .4s ease}
+.star-counter{position:fixed;top:14px;right:24px;font-family:'Poppins',sans-serif;font-weight:600;font-size:1.1rem;color:var(--yellow-dark);z-index:100;background:var(--white);padding:6px 16px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.star-counter.pop{animation:starPop .4s ease}
+@keyframes starPop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+.slide-container{width:100%;max-width:900px;min-height:480px;margin:60px auto 80px;padding:40px 36px;background:var(--white);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.08);transition:opacity .3s ease}
+.slide-container.fade-out{opacity:0}
+.nav-bar{position:fixed;bottom:0;left:0;width:100%;background:var(--white);border-top:2px solid var(--light-blue);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
+.nav-btn{font-family:'Poppins',sans-serif;font-weight:600;font-size:.95rem;padding:10px 28px;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.nav-btn.prev{background:var(--light-blue);color:var(--teal)}
+.nav-btn.next{background:var(--teal);color:var(--white)}
+.nav-btn:hover{transform:translateY(-1px);box-shadow:0 3px 10px rgba(0,0,0,.15)}
+.nav-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.slide-count{font-family:'Open Sans',sans-serif;font-size:.85rem;color:var(--gray)}
+h1{font-family:'Poppins',sans-serif;color:var(--teal);font-size:2rem;margin-bottom:8px}
+h2{font-family:'Poppins',sans-serif;color:var(--teal);font-size:1.5rem;margin-bottom:12px}
+h3{font-family:'Poppins',sans-serif;color:var(--coral);font-size:1.15rem;margin-bottom:8px}
+.subtitle{font-size:1.1rem;color:var(--gray);margin-bottom:16px}
+.learn-label{display:inline-block;font-family:'Poppins',sans-serif;font-weight:600;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;padding:4px 14px;border-radius:12px;margin-bottom:16px}
+.learn-label.learn{background:var(--light-blue);color:var(--teal)}
+.learn-label.practice{background:var(--coral-pale);color:var(--coral)}
+.learn-label.review{background:var(--blue-pale);color:var(--teal)}
+.goal-box{background:var(--light-blue);border-radius:12px;padding:16px 20px;margin:20px 0}
+.goal-box p{font-size:1rem;color:var(--dark);line-height:1.6}
+.goal-box strong{color:var(--teal)}
+.concept-big{text-align:center;padding:60px 20px}
+.concept-big .word{font-family:'Poppins',sans-serif;font-size:3.5rem;font-weight:700;color:var(--teal);margin-bottom:8px}
+.concept-big .sub{font-size:1.2rem;color:var(--coral);font-weight:500}
+.compare-table{width:100%;border-collapse:collapse;margin:16px 0;border-radius:12px;overflow:hidden}
+.compare-table th{font-family:'Poppins',sans-serif;padding:12px 16px;background:var(--teal);color:white;text-align:left;font-size:.95rem}
+.compare-table td{padding:10px 16px;font-size:.95rem;border-bottom:1px solid #e0e0e0}
+.compare-table tr:nth-child(even) td{background:var(--light-gray)}
+.compare-table .proper{font-weight:700;color:var(--coral)}
+.compare-table .arrow{text-align:center;color:var(--teal);font-weight:700}
+.rule-card{background:var(--light-blue);border-radius:14px;padding:24px;margin:16px 0;border-left:5px solid var(--teal)}
+.rule-card h3{color:var(--teal);margin-bottom:10px}
+.rule-card p{line-height:1.7}
+.mc-question{margin:20px 0}
+.mc-question .prompt{font-weight:600;font-size:1.05rem;margin-bottom:12px}
+.mc-options{display:grid;gap:10px}
+.mc-opt{display:flex;align-items:center;padding:12px 18px;background:var(--light-gray);border:2px solid transparent;border-radius:10px;cursor:pointer;font-size:.95rem;transition:all .2s}
+.mc-opt:hover{border-color:var(--teal);background:var(--blue-pale)}
+.mc-opt.selected{border-color:var(--teal);background:var(--light-blue)}
+.mc-opt.correct{border-color:var(--teal);background:#d4edda}
+.mc-opt.incorrect{border-color:var(--coral);background:#fde8e5}
+.mc-opt .letter{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--white);font-weight:700;color:var(--teal);margin-right:12px;font-size:.85rem;flex-shrink:0}
+.mc-feedback{margin-top:10px;padding:10px 16px;border-radius:8px;font-size:.9rem;display:none}
+.mc-feedback.show{display:block}
+.mc-feedback.correct{background:#d4edda;color:#155724}
+.mc-feedback.incorrect{background:#fde8e5;color:#721c24}
+.sort-zone{display:flex;gap:20px;margin:16px 0;flex-wrap:wrap}
+.sort-bucket{flex:1;min-width:200px;min-height:120px;border:2px dashed var(--teal);border-radius:12px;padding:14px;text-align:center}
+.sort-bucket.common{border-color:var(--teal);background:var(--blue-pale)}
+.sort-bucket.proper{border-color:var(--coral);background:var(--coral-pale)}
+.sort-bucket h4{font-family:'Poppins',sans-serif;margin-bottom:6px}
+.sort-bucket.common h4{color:var(--teal)}
+.sort-bucket.proper h4{color:var(--coral)}
+.sort-words{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:16px 0}
+.sort-word{display:inline-block;padding:8px 18px;background:var(--white);border:2px solid #ccc;border-radius:20px;cursor:grab;font-family:'Poppins',sans-serif;font-weight:500;font-size:.95rem;transition:all .2s;user-select:none}
+.sort-word:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 3px 8px rgba(0,0,0,.1)}
+.sort-word.placed{opacity:.4;cursor:default;pointer-events:none}
+.sort-word.in-bucket{border-color:var(--teal);cursor:pointer;padding:6px 14px;font-size:.85rem;opacity:1;pointer-events:auto}
+.sort-word.in-bucket:hover{background:#fde8e5}
+.check-btn{font-family:'Poppins',sans-serif;font-weight:600;padding:10px 28px;border:none;border-radius:8px;cursor:pointer;font-size:.95rem;transition:all .2s;margin:8px 4px}
+.check-btn.primary{background:var(--teal);color:white}
+.check-btn.secondary{background:var(--light-blue);color:var(--teal)}
+.check-btn:hover{transform:translateY(-1px);box-shadow:0 3px 8px rgba(0,0,0,.15)}
+.sort-feedback{margin-top:12px;padding:12px 16px;border-radius:8px;font-size:.9rem;display:none}
+.sort-feedback.show{display:block}
+.sort-feedback.correct{background:#d4edda;color:#155724}
+.sort-feedback.incorrect{background:#fde8e5;color:#721c24}
+.sf-sentence{font-size:1.1rem;line-height:2;margin-bottom:8px}
+.sf-word{display:inline-block;padding:2px 6px;border-radius:4px;cursor:pointer;transition:all .15s}
+.sf-word:hover{background:var(--light-blue)}
+.sf-word.sel-c{background:var(--light-blue);color:var(--teal);font-weight:700;border-bottom:3px solid var(--teal)}
+.sf-word.sel-p{background:var(--coral-pale);color:var(--coral);font-weight:700;border-bottom:3px solid var(--coral)}
+.sf-word.ok-c{background:#d4edda;color:#155724;font-weight:700}
+.sf-word.ok-p{background:#d4edda;color:#155724;font-weight:700}
+.sf-word.missed{background:#fff3cd;color:#856404;font-weight:600}
+.sf-legend{display:flex;gap:16px;margin-bottom:12px;font-size:.85rem;flex-wrap:wrap}
+.sf-legend-item{display:flex;align-items:center;gap:6px}
+.sf-legend-dot{width:14px;height:14px;border-radius:4px}
+.sf-legend-dot.common{background:var(--light-blue);border:2px solid var(--teal)}
+.sf-legend-dot.proper{background:var(--coral-pale);border:2px solid var(--coral)}
+.ef-sentence{font-size:1.1rem;line-height:2.2;margin:12px 0;padding:12px 16px;background:var(--light-gray);border-radius:8px}
+.ef-word{display:inline;cursor:pointer;padding:2px 4px;border-radius:3px;transition:all .15s}
+.ef-word:hover{background:var(--coral-pale)}
+.ef-word.fixed{background:#d4edda;color:#155724;font-weight:700}
+.ef-word.needs-fix{background:var(--coral-pale);text-decoration:underline wavy var(--coral)}
+.review-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:16px 0}
+.review-card{border-radius:12px;padding:20px;cursor:pointer;text-align:center;min-height:120px;display:flex;flex-direction:column;justify-content:center;transition:transform .2s,box-shadow .2s}
+.review-card:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.1)}
+.review-card .q{font-family:'Poppins',sans-serif;font-weight:600;font-size:.95rem}
+.review-card .a{display:none;font-size:.9rem;margin-top:10px;line-height:1.5}
+.review-card.revealed .a{display:block}
+.review-card.revealed .q{font-size:.8rem;opacity:.7;margin-bottom:4px}
+.rc-teal{background:var(--light-blue);color:var(--teal)}
+.rc-coral{background:var(--coral-pale);color:var(--coral)}
+.rc-yellow{background:var(--yellow);color:var(--dark)}
+.rc-blue{background:var(--blue-pale);color:var(--teal)}
+.celebration{text-align:center;padding:30px}
+.celebration h1{font-size:2.5rem;margin-bottom:12px}
+.celebration .emoji{font-size:3rem;margin:10px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin:24px 0}
+.stat-card{background:var(--light-gray);border-radius:12px;padding:18px;text-align:center}
+.stat-card .num{font-family:'Poppins',sans-serif;font-size:2rem;font-weight:700;color:var(--teal)}
+.stat-card .label{font-size:.85rem;color:var(--gray);margin-top:4px}
+.restart-btn{margin-top:24px;font-family:'Poppins',sans-serif;font-weight:600;padding:12px 32px;background:var(--coral);color:white;border:none;border-radius:8px;font-size:1rem;cursor:pointer;transition:all .2s}
+.restart-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.confetti-piece{position:fixed;width:10px;height:10px;z-index:200;pointer-events:none;animation:confettiFall 2.5s ease-out forwards}
+@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}
+.key-idea{background:linear-gradient(135deg,var(--light-blue),var(--blue-pale));border-radius:14px;padding:20px 24px;margin:16px 0;border-left:5px solid var(--teal)}
+.key-idea p{font-size:1rem;line-height:1.7}
+@media(max-width:700px){.slide-container{margin:50px 8px 80px;padding:24px 18px}h1{font-size:1.5rem}h2{font-size:1.25rem}.concept-big .word{font-size:2.5rem}.sort-zone{flex-direction:column}.nav-btn{padding:8px 18px;font-size:.85rem}}
+@media(max-width:500px){.slide-container{padding:18px 14px}.review-cards{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="star-counter" id="starCounter">&#11088; 0</div>
+<div class="slide-container" id="slideContainer"></div>
+<div class="nav-bar">
+  <button class="nav-btn prev" id="prevBtn" onclick="prevSlide()">&larr; Back</button>
+  <span class="slide-count" id="slideCount"></span>
+  <button class="nav-btn next" id="nextBtn" onclick="nextSlide()">Next &rarr;</button>
+</div>
+<script>
+const L={unit:1,lesson:3,title:"Common vs. Proper Nouns",subtitle:"Capitalizing Special Names",
+goal:"I can tell the difference between common nouns and proper nouns, and I know when to use capital letters.",
+prevReview:{concept:"Nouns & NAME IT",question:"Which of these is a NOUN?",options:["quickly","happiness","beautiful","very"],correct:1,explanation:"'Happiness' is a noun \u2014 it names an idea (a feeling). Remember NAME IT: Nouns Are Naming Every Interesting Thing!"},
+comparePairs:[{common:"girl",proper:"Emma, Sofia, Maria"},{common:"city",proper:"Chicago, London, Tokyo"},{common:"dog",proper:"Fluffy, Max, Buddy"},{common:"school",proper:"Lincoln Elementary"},{common:"month",proper:"January, April, December"},{common:"day",proper:"Monday, Friday, Sunday"}],
+sortWords:[{word:"cat",type:"common"},{word:"Monday",type:"proper"},{word:"teacher",type:"common"},{word:"Chicago",type:"proper"},{word:"park",type:"common"},{word:"Thanksgiving",type:"proper"},{word:"book",type:"common"},{word:"Sarah",type:"proper"},{word:"city",type:"common"},{word:"December",type:"proper"}],
+sfData:[
+{words:["My","friend","Jessica","goes","to","Lincoln","Middle","School","every","day."],nounIdx:{1:"common",2:"proper",5:"proper",6:"proper",7:"proper",9:"common"}},
+{words:["The","family","drove","to","the","beach","on","Saturday."],nounIdx:{1:"common",5:"common",7:"proper"}},
+{words:["We","celebrate","Christmas","in","December","with","our","grandparents."],nounIdx:{2:"proper",4:"proper",7:"common"}}
+],
+editSentences:[
+{display:["my","sister","sarah","wants","to","visit","paris","in","june."],fixes:{2:"Sarah",6:"Paris",8:"June"}},
+{display:["we","read","a","book","about","george","washington."],fixes:{5:"George",6:"Washington"}},
+{display:["every","monday,","we","have","gym","class","at","riverside","school."],fixes:{1:"Monday,",7:"Riverside",8:"School."}}
+],
+quickCheck:{question:"Which word is a PROPER noun?",options:["building","Friday","animal","country"],correct:1,explanation:"'Friday' is a proper noun because it's the specific name of a day. Days of the week are always capitalized!"},
+reviewCards:[
+{q:"What is a common noun?",a:"A general name for any person, place, thing, animal, or idea. Not capitalized (unless starting a sentence).",color:"rc-teal"},
+{q:"What is a proper noun?",a:"The specific, special name of someone or something. ALWAYS capitalized!",color:"rc-coral"},
+{q:"Always capitalize these!",a:"People\u2019s names, place names, days, months, holidays, pet names, and any other specific names.",color:"rc-yellow"},
+{q:"Key Question to Ask",a:"\u201CIs this a SPECIFIC name of someone or something?\u201D YES = Proper \u2192 Capitalize! NO = Common \u2192 Lowercase",color:"rc-blue"}
+]};
+
+let cur=0,stars=0,acts=0,total=11;
+const SB=[];
+
+function addStars(n){stars+=n;const e=document.getElementById('starCounter');e.textContent='\u2B50 '+stars;e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')}
+function fireConfetti(){const colors=['#E66B5D','#3A7D8C','#F3D25B','#D7ECF0','#ff6b9d','#48dbfb'];for(let i=0;i<50;i++){const e=document.createElement('div');e.className='confetti-piece';e.style.left=Math.random()*100+'vw';e.style.top='-10px';e.style.background=colors[Math.floor(Math.random()*colors.length)];e.style.borderRadius=Math.random()>.5?'50%':'2px';e.style.width=(Math.random()*8+6)+'px';e.style.height=(Math.random()*8+6)+'px';e.style.animationDuration=(Math.random()*1.5+1.5)+'s';e.style.animationDelay=(Math.random()*.5)+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),3000)}}
+
+// Slide 1: Title
+SB.push(()=>`<div style="text-align:center;padding:30px 0">
+<span class="learn-label learn">Unit ${L.unit} \u2022 Lesson ${L.lesson}</span>
+<h1 style="font-size:2.2rem;margin-top:12px">${L.title}</h1>
+<p class="subtitle">${L.subtitle}</p>
+<div class="goal-box"><p><strong>Today\u2019s Goal:</strong> ${L.goal}</p></div>
+<div style="margin-top:20px;padding:14px;background:var(--coral-pale);border-radius:10px">
+<p style="font-family:'Poppins',sans-serif;font-weight:600;color:var(--coral)">\uD83D\uDD11 Key Idea: Proper nouns are SPECIAL NAMES and always get capitals!</p></div></div>`);
+
+// Slide 2: Concept Intro
+SB.push(()=>`<div class="concept-big"><span class="learn-label learn">Learn</span>
+<div class="word">Common & Proper Nouns</div><div class="sub">Two Types of Naming Words</div></div>`);
+
+// Slide 3: Review Previous Lesson (Interactive MC)
+SB.push(()=>{const r=L.prevReview;let h=`<span class="learn-label learn">Review</span><h2>Quick Review: ${r.concept}</h2>
+<div class="mc-question" id="revQ"><p class="prompt">${r.question}</p><div class="mc-options">`;
+r.options.forEach((o,i)=>{h+=`<div class="mc-opt" data-i="${i}" onclick="revMC(this,${i})"><span class="letter">${String.fromCharCode(65+i)}</span> ${o}</div>`});
+return h+`</div><div class="mc-feedback" id="revFB"></div></div>`});
+
+// Slide 4: Rule/Concept Definition
+SB.push(()=>`<span class="learn-label learn">Learn</span><h2>Two Types of Nouns</h2>
+<div style="display:grid;gap:16px;margin-top:16px">
+<div class="rule-card" style="border-left-color:var(--teal)"><h3 style="color:var(--teal)">Common Nouns</h3>
+<p>A common noun names <strong>ANY</strong> person, place, thing, animal, or idea. It\u2019s a <strong>general</strong> name, not a specific name.</p>
+<p style="margin-top:8px;color:var(--gray)">Examples: girl, city, dog, school, month</p>
+<p style="margin-top:8px;font-weight:600;color:var(--teal)">\u274C Do NOT capitalize (unless starting a sentence)</p></div>
+<div class="rule-card" style="border-left-color:var(--coral);background:var(--coral-pale)"><h3 style="color:var(--coral)">Proper Nouns</h3>
+<p>A proper noun names a <strong>SPECIFIC</strong> person, place, thing, animal, or idea. It\u2019s the <strong>special name</strong> of someone or something.</p>
+<p style="margin-top:8px;color:var(--gray)">Examples: Emma, Chicago, Fluffy, Lincoln Elementary, January</p>
+<p style="margin-top:8px;font-weight:600;color:var(--coral)">\u2705 ALWAYS capitalize \u2014 even in the middle of a sentence!</p></div></div>`);
+
+// Slide 5: Side-by-Side Comparison
+SB.push(()=>{let rows=L.comparePairs.map(p=>`<tr><td>${p.common}</td><td class="arrow">\u2192</td><td class="proper">${p.proper}</td></tr>`).join('');
+return `<span class="learn-label learn">Learn</span><h2>Common \u2192 Proper: Side by Side</h2>
+<table class="compare-table"><tr><th>Common Noun (general)</th><th></th><th>Proper Noun (specific name)</th></tr>${rows}</table>
+<div class="key-idea"><p><strong>\uD83D\uDD11 Key Question:</strong> \u201CIs this a <em>SPECIFIC</em> name of someone or something?\u201D<br>
+<strong style="color:var(--teal)">YES</strong> \u2192 Proper noun \u2192 Capitalize it!<br>
+<strong style="color:var(--coral)">NO</strong> \u2192 Common noun \u2192 Don\u2019t capitalize it</p></div>`});
+
+// Slide 6: Quick Check MC
+SB.push(()=>{const q=L.quickCheck;let h=`<span class="learn-label learn">Quick Check</span><h2>Check Your Understanding</h2>
+<div class="mc-question" id="qcQ"><p class="prompt">${q.question}</p><div class="mc-options">`;
+q.options.forEach((o,i)=>{h+=`<div class="mc-opt" data-i="${i}" onclick="qcMC(this,${i})"><span class="letter">${String.fromCharCode(65+i)}</span> ${o}</div>`});
+return h+`</div><div class="mc-feedback" id="qcFB"></div></div>`});
+
+// Slide 7: Noun Sort
+SB.push(()=>{let w=L.sortWords.map((s,i)=>`<span class="sort-word" data-i="${i}" data-t="${s.type}" onclick="selSort(this)">${s.word}</span>`).join('');
+return `<span class="learn-label practice">Practice</span><h2>Sort the Nouns!</h2>
+<p style="color:var(--gray);margin-bottom:12px">Click a word, then click the correct bucket to sort it.</p>
+<div class="sort-words" id="sortW">${w}</div>
+<div class="sort-zone">
+<div class="sort-bucket common" onclick="placeSort('common')"><h4>Common Nouns</h4><p style="font-size:.8rem;color:var(--gray)">general names</p><div id="cItems"></div></div>
+<div class="sort-bucket proper" onclick="placeSort('proper')"><h4>Proper Nouns</h4><p style="font-size:.8rem;color:var(--gray)">specific names</p><div id="pItems"></div></div></div>
+<div style="text-align:center;margin-top:12px"><button class="check-btn primary" onclick="chkSort()">Check My Sort \u2713</button>
+<button class="check-btn secondary" onclick="rstSort()">Reset</button></div>
+<div class="sort-feedback" id="sortFB"></div>`});
+
+// Slide 8: Sentence Finder
+SB.push(()=>{let h=`<span class="learn-label practice">Practice</span><h2>Find the Nouns!</h2>
+<div class="sf-legend"><div class="sf-legend-item"><div class="sf-legend-dot common"></div> Click once = Common</div>
+<div class="sf-legend-item"><div class="sf-legend-dot proper"></div> Click twice = Proper</div>
+<div class="sf-legend-item" style="color:var(--gray)">Click again to deselect</div></div>
+<p style="font-size:.9rem;color:var(--gray);margin-bottom:12px">Click each noun in the sentences below. Click once for Common, twice for Proper.</p>`;
+L.sfData.forEach((s,si)=>{h+=`<div class="sf-sentence" id="sf${si}">`;s.words.forEach((w,wi)=>{h+=`<span class="sf-word" data-s="${si}" data-w="${wi}" onclick="togSF(this)">${w} </span>`});h+='</div>'});
+return h+`<div style="text-align:center;margin-top:16px"><button class="check-btn primary" onclick="chkSF()">Check My Answers \u2713</button></div><div class="sort-feedback" id="sfFB"></div>`});
+
+// Slide 9: Error Finder / Editing
+SB.push(()=>{let h=`<span class="learn-label practice">Practice</span><h2>Fix the Capitalization!</h2>
+<p style="color:var(--gray);margin-bottom:8px">These sentences have proper nouns that need capital letters. Click on words that should be capitalized to fix them!</p>
+<div class="key-idea" style="padding:12px 16px;margin-bottom:16px"><p style="font-size:.9rem"><strong>Remember:</strong> Always capitalize people\u2019s names, place names, days, months, and holidays!</p></div>`;
+L.editSentences.forEach((s,si)=>{h+=`<div class="ef-sentence" id="ef${si}">`;s.display.forEach((w,wi)=>{h+=`<span class="ef-word" data-s="${si}" data-w="${wi}" data-o="${w}" onclick="fixW(this,${si},${wi})">${w} </span>`});h+='</div>'});
+return h+`<div style="text-align:center;margin-top:16px"><button class="check-btn primary" onclick="chkEF()">Check My Fixes \u2713</button></div><div class="sort-feedback" id="efFB"></div>`});
+
+// Slide 10: Review Cards
+SB.push(()=>{let h=`<span class="learn-label review">Review</span><h2>What Did We Learn?</h2>
+<p style="color:var(--gray);margin-bottom:16px">Click each card to reveal the answer!</p><div class="review-cards">`;
+L.reviewCards.forEach(c=>{h+=`<div class="review-card ${c.color}" onclick="revCard(this)"><div class="q">${c.q}</div><div class="a">${c.a}</div></div>`});
+return h+'</div>'});
+
+// Slide 11: Celebration
+SB.push(()=>`<div class="celebration"><div class="emoji">\uD83C\uDF89\uD83C\uDF1F\uD83C\uDF89</div>
+<h1>Amazing Work!</h1><p style="font-size:1.1rem;color:var(--gray);margin-bottom:8px">You\u2019ve completed Lesson 3: Common vs. Proper Nouns!</p>
+<div class="stats-grid"><div class="stat-card"><div class="num" id="fStars">${stars}</div><div class="label">Stars Earned \u2B50</div></div>
+<div class="stat-card"><div class="num" id="fActs">${acts}</div><div class="label">Activities Completed</div></div></div>
+<p style="margin-top:16px;font-size:1rem;color:var(--teal);font-weight:600">Remember: Proper nouns are SPECIFIC names and ALWAYS get capitals!</p>
+<p style="margin-top:8px;color:var(--gray)">Next lesson: Verbs \u2014 Action Words!</p>
+<button class="restart-btn" onclick="startOver()">\uD83D\uDD04 Start Over</button></div>`);
+
+// ========== INTERACTION HANDLERS ==========
+let revDone=false;
+function revMC(el,i){if(revDone)return;revDone=true;const c=L.prevReview.correct,fb=document.getElementById('revFB');
+document.querySelectorAll('#revQ .mc-opt').forEach(o=>{const oi=+o.dataset.i;if(oi===c)o.classList.add('correct');else if(oi===i)o.classList.add('incorrect')});
+if(i===c){fb.className='mc-feedback show correct';fb.textContent='\u2705 Correct! '+L.prevReview.explanation;addStars(1);acts++}
+else{fb.className='mc-feedback show incorrect';fb.textContent='\u274C Not quite. '+L.prevReview.explanation}}
+
+let qcDone=false;
+function qcMC(el,i){if(qcDone)return;qcDone=true;const c=L.quickCheck.correct,fb=document.getElementById('qcFB');
+document.querySelectorAll('#qcQ .mc-opt').forEach(o=>{const oi=+o.dataset.i;if(oi===c)o.classList.add('correct');else if(oi===i&&oi!==c)o.classList.add('incorrect')});
+if(i===c){fb.className='mc-feedback show correct';fb.textContent='\u2705 Correct! '+L.quickCheck.explanation;addStars(1);acts++}
+else{fb.className='mc-feedback show incorrect';fb.textContent='\u274C Not quite. '+L.quickCheck.explanation}}
+
+let selW=null;
+function selSort(el){if(el.classList.contains('placed'))return;document.querySelectorAll('.sort-word:not(.placed)').forEach(w=>w.style.outline='');el.style.outline='3px solid var(--teal)';selW=el}
+function placeSort(b){if(!selW)return;const c=document.getElementById(b==='common'?'cItems':'pItems'),cl=document.createElement('span');
+cl.className='sort-word in-bucket';cl.textContent=selW.textContent;cl.dataset.i=selW.dataset.i;cl.dataset.t=selW.dataset.t;cl.dataset.b=b;
+cl.onclick=function(){rmSort(this)};c.appendChild(cl);selW.classList.add('placed');selW.style.outline='';selW=null}
+function rmSort(el){const i=el.dataset.i;const o=document.querySelector('.sort-words .sort-word[data-i="'+i+'"]');if(o)o.classList.remove('placed');el.remove()}
+function rstSort(){document.querySelectorAll('.sort-word').forEach(w=>{w.classList.remove('placed');w.style.outline=''});document.querySelectorAll('.in-bucket').forEach(w=>w.remove());document.getElementById('sortFB').className='sort-feedback';selW=null}
+let sortDone=false;
+function chkSort(){if(sortDone)return;const p=document.querySelectorAll('.sort-word.in-bucket');if(p.length<L.sortWords.length){const fb=document.getElementById('sortFB');fb.className='sort-feedback show incorrect';fb.textContent=`Sort all ${L.sortWords.length} words first! (${p.length} sorted so far)`;return}
+let ok=0;p.forEach(w=>{if(w.dataset.t===w.dataset.b)ok++});const fb=document.getElementById('sortFB');
+if(ok===L.sortWords.length){fb.className='sort-feedback show correct';fb.textContent=`\uD83C\uDF89 Perfect! All ${L.sortWords.length} nouns sorted correctly!`;addStars(3);acts++;sortDone=true;fireConfetti()}
+else{fb.className='sort-feedback show incorrect';fb.textContent=`${ok} of ${L.sortWords.length} correct. Check the ones in the wrong bucket and try again!`}}
+
+function togSF(el){if(el.classList.contains('ok-c')||el.classList.contains('ok-p')||el.classList.contains('missed'))return;
+if(!el.classList.contains('sel-c')&&!el.classList.contains('sel-p')){el.classList.add('sel-c')}
+else if(el.classList.contains('sel-c')){el.classList.remove('sel-c');el.classList.add('sel-p')}
+else{el.classList.remove('sel-p')}}
+
+let sfDone=false;
+function chkSF(){if(sfDone)return;sfDone=true;let ok=0,tot=0;
+L.sfData.forEach((s,si)=>{Object.keys(s.nounIdx).forEach(()=>tot++);
+document.querySelectorAll('#sf'+si+' .sf-word').forEach(w=>{const wi=+w.dataset.w,exp=s.nounIdx[wi],isC=w.classList.contains('sel-c'),isP=w.classList.contains('sel-p');
+w.classList.remove('sel-c','sel-p');
+if(exp){if((exp==='common'&&isC)||(exp==='proper'&&isP)){w.classList.add(exp==='common'?'ok-c':'ok-p');ok++}else{w.classList.add('missed')}}
+else if(isC||isP){w.style.textDecoration='line-through';w.style.color='#999'}})});
+const fb=document.getElementById('sfFB');
+if(ok===tot){fb.className='sort-feedback show correct';fb.textContent=`\uD83C\uDF89 Excellent! You found and correctly labeled all ${tot} nouns!`;addStars(2);acts++;fireConfetti()}
+else{fb.className='sort-feedback show incorrect';fb.textContent=`${ok} of ${tot} nouns correct. Yellow highlights show missed nouns.`}}
+
+function fixW(el,si,wi){if(el.classList.contains('fixed'))return;const s=L.editSentences[si];
+if(s.fixes[wi]!==undefined){el.textContent=s.fixes[wi]+' ';el.classList.add('fixed')}}
+
+let efDone=false;
+function chkEF(){if(efDone)return;let ok=0,tot=0;
+L.editSentences.forEach((s,si)=>{tot+=Object.keys(s.fixes).length;
+document.querySelectorAll('#ef'+si+' .ef-word').forEach(w=>{const wi=+w.dataset.w;
+if(s.fixes[wi]!==undefined){if(w.classList.contains('fixed'))ok++;else w.classList.add('needs-fix')}})});
+const fb=document.getElementById('efFB');
+if(ok===tot){fb.className='sort-feedback show correct';fb.textContent=`\uD83C\uDF89 Perfect! You fixed all ${tot} capitalization errors!`;addStars(2);acts++;efDone=true;fireConfetti()}
+else{fb.className='sort-feedback show incorrect';fb.textContent=`${ok} of ${tot} fixed. Look for underlined words \u2014 they still need capitals!`}}
+
+let cardsR=0;
+function revCard(el){if(el.classList.contains('revealed'))return;el.classList.add('revealed');cardsR++;if(cardsR===L.reviewCards.length){addStars(1);acts++}}
+
+// ========== NAVIGATION ==========
+function render(){const c=document.getElementById('slideContainer');c.classList.add('fade-out');
+setTimeout(()=>{c.innerHTML=SB[cur]();c.classList.remove('fade-out');
+if(cur===total-1){const fs=document.getElementById('fStars'),fa=document.getElementById('fActs');if(fs)fs.textContent=stars;if(fa)fa.textContent=acts;fireConfetti()}},150);
+document.getElementById('progressFill').style.width=((cur+1)/total*100)+'%';
+document.getElementById('slideCount').textContent=(cur+1)+' / '+total;
+document.getElementById('prevBtn').disabled=cur===0;
+document.getElementById('nextBtn').disabled=cur===total-1}
+function nextSlide(){if(cur<total-1){cur++;render()}}
+function prevSlide(){if(cur>0){cur--;render()}}
+function startOver(){cur=0;stars=0;acts=0;cardsR=0;revDone=false;qcDone=false;sortDone=false;sfDone=false;efDone=false;
+document.getElementById('starCounter').textContent='\u2B50 0';render()}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();nextSlide()}
+else if(e.key==='ArrowLeft'){e.preventDefault();prevSlide()}});
+
+render();
+</script>
+</body>
+</html>

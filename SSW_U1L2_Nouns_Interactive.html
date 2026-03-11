@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSW · Unit 1 · Lesson 2 · Nouns</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FFFFFF;
+  --bg-soft: #FAFAFA;
+  --card: #FFFFFF;
+  --text: #1A1A2E;
+  --text-mid: #4A4A5A;
+  --text-light: #8A8A9A;
+  --border: #E8E8E4;
+  --border-light: #F0F0EC;
+
+  /* SSW Brand Palette */
+  --coral: #e66b5d;
+  --coral-mid: #C8483A;
+  --coral-dark: #A03228;
+  --coral-pale: #FDEEEC;
+  --blue: #d7ecf0;
+  --blue-mid: #8ECAD6;
+  --blue-dark: #3A8FA0;
+  --blue-pale: #EBF5F8;
+  --teal: #3A7D8C;
+  --teal-dark: #2B5F6A;
+  --teal-pale: #E8F4F6;
+  --yellow: #f3d25b;
+  --yellow-mid: #D4AD1A;
+  --yellow-dark: #9E7F0A;
+  --yellow-pale: #FDF8E8;
+
+  /* Semantic Phase Colors */
+  --learn: var(--teal);
+  --learn-bg: var(--blue);
+  --learn-pale: var(--blue-pale);
+  --practice: var(--coral);
+  --practice-bg: var(--coral-pale);
+  --review: var(--teal);
+  --review-bg: var(--blue-pale);
+  --star-color: var(--yellow-mid);
+
+  /* Category Colors */
+  --cat-person: #e66b5d;
+  --cat-place: #3A7D8C;
+  --cat-thing: #f3d25b;
+  --cat-animal: #7C4DCA;
+  --cat-idea: #E091C0;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-pill: 100px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.1);
+  --transition: 0.2s ease;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+
+.progress-bar{position:fixed;top:0;left:0;height:4px;background:var(--coral);transition:width 0.4s ease;z-index:100;}
+.stars-display{position:fixed;top:12px;right:20px;z-index:99;display:flex;align-items:center;gap:6px;background:var(--yellow-pale);border:1px solid var(--yellow);padding:6px 14px;border-radius:var(--radius-pill);box-shadow:var(--shadow-sm);font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;color:var(--yellow-dark);}
+.stars-display .star-icon{font-size:18px;}
+
+.slide-container{flex:1;display:flex;align-items:center;justify-content:center;padding:24px;overflow-y:auto;}
+.slide{display:none;width:100%;max-width:900px;min-height:480px;animation:slideIn 0.3s ease;}
+.slide.active{display:flex;flex-direction:column;}
+@keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.nav-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 32px;background:var(--bg);border-top:1px solid var(--border);gap:12px;flex-shrink:0;}
+.nav-btn{font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:10px 28px;border-radius:var(--radius-pill);border:2px solid var(--border);background:var(--card);color:var(--text-mid);cursor:pointer;transition:all var(--transition);user-select:none;}
+.nav-btn:hover:not(:disabled){border-color:var(--coral);color:var(--coral);background:var(--coral-pale);}
+.nav-btn:disabled{opacity:0.3;cursor:default;}
+.nav-btn.primary{background:var(--coral);color:white;border-color:var(--coral);}
+.nav-btn.primary:hover{background:var(--coral-mid);}
+.nav-info{font-size:13px;color:var(--text-light);font-weight:600;min-width:80px;text-align:center;}
+
+.phase-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;padding:4px 12px;border-radius:var(--radius-pill);display:inline-block;font-family:'Open Sans',sans-serif;}
+.slide-header{margin-bottom:8px;}
+.slide-title{font-family:'Poppins',sans-serif;font-size:30px;font-weight:500;color:var(--text);margin-bottom:4px;}
+.slide-subtitle{font-size:14px;color:var(--text-light);font-weight:600;}
+
+/* ═══ TITLE SLIDE ═══ */
+.title-slide{text-align:center;justify-content:center;align-items:center;gap:16px;}
+.title-brand{font-family:'Open Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);opacity:0.7;}
+.title-unit{font-family:'Poppins',sans-serif;font-size:16px;font-weight:500;color:var(--text-mid);letter-spacing:0.04em;}
+.title-main{font-family:'Poppins',sans-serif;font-size:52px;font-weight:600;color:var(--text);line-height:1.1;}
+.title-bar{width:60px;height:4px;background:var(--coral);border-radius:2px;}
+.title-sub{font-family:'Poppins',sans-serif;font-size:20px;color:var(--text-mid);font-weight:400;}
+.title-meta{font-size:13px;color:var(--text-light);font-weight:600;}
+
+/* ═══ CONCEPT INTRO ═══ */
+.intro-slide{text-align:center;justify-content:center;align-items:center;gap:20px;}
+.intro-concept{font-family:'Poppins',sans-serif;font-size:120px;font-weight:600;color:var(--teal);line-height:1;}
+.intro-tagline{font-family:'Poppins',sans-serif;font-size:22px;color:var(--text-mid);font-weight:400;}
+
+/* ═══ RULE/CONCEPT CARD ═══ */
+.rule-card{background:var(--blue-pale);border:1px solid var(--blue);border-left:5px solid var(--teal);border-radius:var(--radius);padding:28px 32px;margin:16px 0;}
+.rule-text{font-family:'Poppins',sans-serif;font-size:22px;font-weight:400;line-height:1.6;color:var(--text);}
+.rule-text .hl{font-weight:600;color:var(--teal);font-size:26px;}
+.category-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:20px;}
+.category-card{text-align:center;padding:16px 8px;border-radius:var(--radius);background:white;border:2px solid var(--border);transition:all var(--transition);cursor:default;}
+.category-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+.category-icon{font-size:32px;margin-bottom:6px;}
+.category-name{font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;}
+.category-examples{font-size:12px;color:var(--text-light);margin-top:4px;line-height:1.4;}
+.cat-person .category-name{color:var(--cat-person);}
+.cat-person{border-color:rgba(230,107,93,0.3);}
+.cat-place .category-name{color:var(--cat-place);}
+.cat-place{border-color:rgba(58,125,140,0.3);}
+.cat-thing .category-name{color:var(--yellow-dark);}
+.cat-thing{border-color:rgba(243,210,91,0.4);}
+.cat-animal .category-name{color:var(--cat-animal);}
+.cat-animal{border-color:rgba(124,77,202,0.3);}
+.cat-idea .category-name{color:var(--cat-idea);}
+.cat-idea{border-color:rgba(224,145,192,0.3);}
+
+/* ═══ NAME IT STRATEGY ═══ */
+.strategy-card{background:white;border:2px solid var(--coral);border-radius:var(--radius);padding:24px 28px;margin:12px 0;}
+.strategy-title{font-family:'Poppins',sans-serif;font-size:28px;font-weight:600;color:var(--coral);margin-bottom:16px;text-align:center;}
+.strategy-steps{display:flex;flex-direction:column;gap:10px;}
+.strategy-step{display:flex;align-items:flex-start;gap:14px;padding:8px 12px;border-radius:var(--radius-sm);transition:background var(--transition);}
+.strategy-step:hover{background:var(--coral-pale);}
+.step-letter{font-family:'Poppins',sans-serif;font-size:28px;font-weight:700;color:var(--coral);min-width:36px;text-align:center;line-height:1;}
+.step-text{font-family:'Poppins',sans-serif;font-size:17px;font-weight:400;color:var(--text);line-height:1.4;}
+.step-text strong{color:var(--teal);font-weight:600;}
+
+/* ═══ NOUN SORT (5-category) ═══ */
+.sort-zones{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;}
+.sort-zone{min-height:180px;border:2px dashed var(--border);border-radius:var(--radius);padding:8px;transition:all var(--transition);display:flex;flex-direction:column;gap:6px;align-items:center;}
+.sort-zone.drag-over{border-color:var(--teal);background:var(--teal-pale);}
+.sort-zone-header{text-align:center;font-family:'Open Sans',sans-serif;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;padding:8px 4px;border-radius:var(--radius-sm);color:white;width:100%;margin-bottom:2px;}
+.szh-person{background:var(--cat-person);}
+.szh-place{background:var(--cat-place);}
+.szh-thing{background:var(--yellow-dark);}
+.szh-animal{background:var(--cat-animal);}
+.szh-idea{background:var(--cat-idea);}
+.sort-bank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:12px;}
+.sort-word{font-family:'Poppins',sans-serif;font-size:17px;font-weight:400;padding:8px 18px;border-radius:var(--radius-pill);background:var(--card);border:2px solid var(--border);cursor:grab;transition:all var(--transition);user-select:none;}
+.sort-word:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:var(--shadow);}
+.sort-word.placed{opacity:0.92;font-size:14px;padding:6px 12px;}
+.sort-word.correct{border-color:var(--teal);background:var(--blue);}
+.sort-word.incorrect{border-color:var(--coral);background:var(--coral-pale);animation:shake 0.4s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.sort-controls{display:flex;gap:10px;justify-content:center;margin-top:8px;}
+.sort-check-btn,.sort-reset-btn{font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:10px 28px;border-radius:var(--radius-pill);border:none;cursor:pointer;transition:all var(--transition);}
+.sort-check-btn{background:var(--teal);color:white;}
+.sort-check-btn:hover{background:var(--teal-dark);}
+.sort-reset-btn{background:var(--card);color:var(--text-mid);border:2px solid var(--border);}
+.sort-reset-btn:hover{border-color:var(--coral);color:var(--coral);}
+.sort-feedback{text-align:center;font-size:15px;font-weight:700;padding:8px;border-radius:var(--radius-sm);margin-top:8px;display:none;}
+.sort-feedback.show{display:block;}
+.sort-feedback.success{background:var(--blue);color:var(--teal);}
+.sort-feedback.retry{background:var(--coral-pale);color:var(--coral);}
+
+/* ═══ SENTENCE NOUN FINDER ═══ */
+.finder-area{margin:12px 0;}
+.finder-sentence{font-family:'Poppins',sans-serif;font-size:28px;font-weight:400;color:var(--text);text-align:center;padding:24px 16px;line-height:1.6;min-height:100px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px;}
+.finder-word{cursor:pointer;padding:4px 8px;border-radius:6px;transition:all var(--transition);display:inline-block;border:2px solid transparent;user-select:none;}
+.finder-word:hover{background:var(--blue-pale);border-color:var(--blue);}
+.finder-word.selected{border-style:solid;border-width:2px;font-weight:500;}
+.finder-word.sel-person{background:rgba(230,107,93,0.2);border-color:var(--cat-person);box-shadow:0 2px 0 var(--cat-person);}
+.finder-word.sel-place{background:rgba(58,125,140,0.2);border-color:var(--cat-place);box-shadow:0 2px 0 var(--cat-place);}
+.finder-word.sel-thing{background:rgba(243,210,91,0.3);border-color:var(--yellow);box-shadow:0 2px 0 var(--yellow-mid);}
+.finder-word.sel-animal{background:rgba(124,77,202,0.2);border-color:var(--cat-animal);box-shadow:0 2px 0 var(--cat-animal);}
+.finder-word.sel-idea{background:rgba(224,145,192,0.25);border-color:var(--cat-idea);box-shadow:0 2px 0 var(--cat-idea);}
+.finder-word.wrong{animation:shake 0.4s ease;background:var(--coral-pale);border-color:var(--coral);}
+
+.finder-toolbar{display:flex;justify-content:center;gap:8px;margin:16px 0 8px;flex-wrap:wrap;align-items:center;}
+.finder-pen{font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;padding:6px 16px;border-radius:var(--radius-pill);border:2px solid var(--border);background:var(--card);color:var(--text-mid);cursor:pointer;transition:all var(--transition);user-select:none;}
+.finder-pen:hover{transform:translateY(-1px);box-shadow:var(--shadow-sm);}
+.finder-pen.active-pen{transform:translateY(-1px);}
+.pen-person{border-color:var(--cat-person);color:var(--cat-person);}
+.pen-person.active-pen{background:var(--cat-person);color:white;}
+.pen-place{border-color:var(--cat-place);color:var(--cat-place);}
+.pen-place.active-pen{background:var(--cat-place);color:white;}
+.pen-thing{border-color:var(--yellow-mid);color:var(--yellow-dark);}
+.pen-thing.active-pen{background:var(--yellow);color:var(--yellow-dark);}
+.pen-animal{border-color:var(--cat-animal);color:var(--cat-animal);}
+.pen-animal.active-pen{background:var(--cat-animal);color:white;}
+.pen-idea{border-color:var(--cat-idea);color:var(--cat-idea);}
+.pen-idea.active-pen{background:var(--cat-idea);color:white;}
+.pen-eraser{border-color:var(--border);color:var(--text-light);}
+.pen-eraser.active-pen{background:var(--text-light);color:white;}
+
+.finder-counter{font-size:13px;font-weight:700;color:var(--text-light);text-align:center;margin-bottom:8px;}
+.finder-controls{display:flex;justify-content:center;gap:10px;margin-top:8px;}
+.finder-check-btn{font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:10px 28px;border-radius:var(--radius-pill);border:none;background:var(--teal);color:white;cursor:pointer;transition:all var(--transition);}
+.finder-check-btn:hover{background:var(--teal-dark);}
+.finder-feedback{text-align:center;font-size:15px;font-weight:700;margin-top:8px;min-height:24px;}
+
+/* ═══ CAPS REVIEW ═══ */
+.caps-sentence{font-family:'Poppins',sans-serif;font-size:36px;font-weight:400;text-align:center;color:var(--text);padding:20px;background:var(--bg-soft);border-radius:var(--radius);margin:16px 0;border:2px solid var(--border);}
+.caps-sentence .error{color:var(--coral);text-decoration:underline;text-decoration-style:wavy;cursor:pointer;transition:all var(--transition);}
+.caps-sentence .fixed{color:var(--teal);font-weight:500;}
+.caps-choices{display:flex;justify-content:center;gap:12px;margin-top:12px;}
+.caps-choice{font-family:'Poppins',sans-serif;font-size:18px;padding:12px 24px;border-radius:var(--radius-pill);border:2px solid var(--border);background:white;cursor:pointer;transition:all var(--transition);}
+.caps-choice:hover{border-color:var(--teal);background:var(--blue-pale);}
+.caps-choice.chosen{border-color:var(--teal);background:var(--blue);font-weight:600;}
+.caps-choice.wrong-choice{border-color:var(--coral);background:var(--coral-pale);}
+
+/* ═══ MULTIPLE CHOICE ═══ */
+.mc-question{font-family:'Poppins',sans-serif;font-size:22px;font-weight:400;color:var(--text);text-align:center;margin:16px 0;line-height:1.5;}
+.mc-options{display:flex;flex-direction:column;gap:10px;max-width:500px;margin:0 auto;}
+.mc-option{font-family:'Poppins',sans-serif;font-size:17px;padding:14px 24px;border-radius:var(--radius);border:2px solid var(--border);background:white;cursor:pointer;transition:all var(--transition);text-align:left;}
+.mc-option:hover{border-color:var(--teal);background:var(--blue-pale);}
+.mc-option.selected{border-color:var(--teal);background:var(--blue);font-weight:500;}
+.mc-option.correct-answer{border-color:var(--teal);background:var(--blue);font-weight:500;}
+.mc-option.wrong-answer{border-color:var(--coral);background:var(--coral-pale);opacity:0.7;}
+.mc-feedback{text-align:center;font-size:15px;font-weight:700;margin-top:12px;min-height:24px;}
+
+/* ═══ REVIEW CARDS ═══ */
+.review-cards{display:flex;flex-direction:column;gap:12px;margin:12px 0;}
+.review-card{border-radius:var(--radius);padding:18px 24px;border-left:5px solid transparent;cursor:pointer;transition:all var(--transition);}
+.review-card .q{font-family:'Poppins',sans-serif;font-weight:500;font-size:17px;margin-bottom:4px;}
+.review-card .a{font-size:15px;color:var(--text-mid);max-height:0;overflow:hidden;transition:max-height 0.3s ease,margin 0.3s ease;}
+.review-card.open .a{max-height:120px;margin-top:6px;}
+.review-card.rc-coral{background:var(--coral-pale);border-left-color:var(--coral);}
+.review-card.rc-coral .q{color:var(--coral);}
+.review-card.rc-teal{background:var(--teal-pale);border-left-color:var(--teal);}
+.review-card.rc-teal .q{color:var(--teal);}
+.review-card.rc-yellow{background:var(--yellow-pale);border-left-color:var(--yellow-mid);}
+.review-card.rc-yellow .q{color:var(--yellow-dark);}
+.review-card.rc-blue{background:var(--blue-pale);border-left-color:var(--blue-dark);}
+.review-card.rc-blue .q{color:var(--blue-dark);}
+
+/* ═══ CELEBRATION ═══ */
+.celebration{text-align:center;justify-content:center;align-items:center;gap:16px;}
+.celebration .big-star{font-size:64px;}
+.celebration .message{font-family:'Poppins',sans-serif;font-size:28px;font-weight:500;color:var(--text);}
+.celebration .stats{font-size:15px;color:var(--text-mid);line-height:1.8;}
+.celebration .stats strong{color:var(--coral);}
+.start-over-btn{font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:10px 32px;border-radius:var(--radius-pill);border:2px solid var(--border);background:var(--card);color:var(--text-mid);cursor:pointer;transition:all var(--transition);margin-top:8px;}
+.start-over-btn:hover{border-color:var(--coral);color:var(--coral);background:var(--coral-pale);}
+
+/* ═══ CONFETTI ═══ */
+.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;overflow:hidden;}
+.confetti-piece{position:absolute;width:10px;height:10px;border-radius:2px;animation:confettiFall 2.5s ease-out forwards;}
+@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+/* ═══ INSTRUCTION NOTE ═══ */
+.instruction-note{background:var(--yellow-pale);border:1px solid var(--yellow);border-radius:var(--radius-sm);padding:12px 18px;margin:12px 0;font-size:14px;color:var(--yellow-dark);font-weight:600;text-align:center;}
+
+@media(max-width:700px){
+  .sort-zones{grid-template-columns:repeat(3,1fr);}
+  .category-grid{grid-template-columns:repeat(3,1fr);}
+  .finder-sentence{font-size:22px;}
+  .title-main{font-size:36px;}
+  .intro-concept{font-size:80px;}
+  .slide-container{padding:16px;}
+  .finder-toolbar{gap:4px;}
+  .finder-pen{font-size:10px;padding:4px 10px;}
+}
+@media(max-width:500px){
+  .sort-zones{grid-template-columns:repeat(2,1fr);}
+  .category-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="stars-display"><span class="star-icon">⭐</span><span id="starCount">0</span></div>
+<div class="confetti-container" id="confettiBox"></div>
+
+<div class="slide-container" id="slideContainer">
+
+<!-- SLIDE 0: TITLE -->
+<div class="slide title-slide active" data-slide="0">
+  <div class="title-brand">Structured Steps to Writing</div>
+  <div class="title-unit">Unit 1 · Lesson 2</div>
+  <div class="title-main">What is a Noun?</div>
+  <div class="title-bar"></div>
+  <div class="title-sub">Naming Words for People, Places, Things, Animals, and Ideas</div>
+  <div class="title-meta">Today's Goal: I can identify nouns and explain what kind of noun each one is.</div>
+</div>
+
+<!-- SLIDE 1: CONCEPT INTRO -->
+<div class="slide intro-slide" data-slide="1">
+  <div class="intro-concept">Noun</div>
+  <div class="intro-tagline">A word that <strong>names</strong> something</div>
+</div>
+
+<!-- SLIDE 2: CAPS REVIEW -->
+<div class="slide" data-slide="2">
+  <div class="slide-header"><span class="phase-label" style="background:var(--blue);color:var(--teal);">Review</span></div>
+  <div class="slide-title" style="color:var(--teal);">Quick Review: CAPS</div>
+  <div class="slide-subtitle">What's missing from this sentence?</div>
+  <div class="caps-sentence" id="capsArea">The dog barked</div>
+  <div class="caps-choices" id="capsChoices">
+    <div class="caps-choice" data-answer="wrong" onclick="checkCaps(this)">Needs a capital letter</div>
+    <div class="caps-choice" data-answer="correct" onclick="checkCaps(this)">Needs end punctuation</div>
+    <div class="caps-choice" data-answer="wrong" onclick="checkCaps(this)">Needs both</div>
+  </div>
+  <div class="mc-feedback" id="capsFeedback"></div>
+</div>
+
+<!-- SLIDE 3: WHAT IS A NOUN -->
+<div class="slide" data-slide="3">
+  <div class="slide-header"><span class="phase-label" style="background:var(--blue);color:var(--teal);">Learn</span></div>
+  <div class="slide-title" style="color:var(--teal);">What is a Noun?</div>
+  <div class="rule-card">
+    <div class="rule-text">A <span class="hl">NOUN</span> is a <span class="hl">naming</span> word.</div>
+    <div style="height:8px;"></div>
+    <div class="rule-text" style="font-size:18px;">Nouns are everywhere in our sentences!</div>
+  </div>
+  <div class="category-grid">
+    <div class="category-card cat-person">
+      <div class="category-icon">👤</div>
+      <div class="category-name">People</div>
+      <div class="category-examples">girl, teacher, doctor</div>
+    </div>
+    <div class="category-card cat-place">
+      <div class="category-icon">🏠</div>
+      <div class="category-name">Places</div>
+      <div class="category-examples">school, park, library</div>
+    </div>
+    <div class="category-card cat-thing">
+      <div class="category-icon">📦</div>
+      <div class="category-name">Things</div>
+      <div class="category-examples">book, desk, pencil</div>
+    </div>
+    <div class="category-card cat-animal">
+      <div class="category-icon">🐕</div>
+      <div class="category-name">Animals</div>
+      <div class="category-examples">dog, cat, elephant</div>
+    </div>
+    <div class="category-card cat-idea">
+      <div class="category-icon">💡</div>
+      <div class="category-name">Ideas</div>
+      <div class="category-examples">love, courage, freedom</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: NAME IT STRATEGY -->
+<div class="slide" data-slide="4">
+  <div class="slide-header"><span class="phase-label" style="background:var(--blue);color:var(--teal);">Learn</span></div>
+  <div class="slide-title" style="color:var(--teal);">Strategy</div>
+  <div class="strategy-card">
+    <div class="strategy-title">NAME IT</div>
+    <div class="strategy-steps">
+      <div class="strategy-step"><div class="step-letter">N</div><div class="step-text"><strong>Notice</strong> the word</div></div>
+      <div class="strategy-step"><div class="step-letter">A</div><div class="step-text"><strong>Ask:</strong> Does it name something?</div></div>
+      <div class="strategy-step"><div class="step-letter">M</div><div class="step-text"><strong>Match</strong> it to a category: Person? Place? Thing? Animal? Idea?</div></div>
+      <div class="strategy-step"><div class="step-letter">E</div><div class="step-text"><strong>Explain</strong> your answer: "_____ is a noun because it names a _____."</div></div>
+      <div class="strategy-step"><div class="step-letter">IT</div><div class="step-text"><strong>Is There</strong> another noun?</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: QUICK CHECK - What IS a noun? -->
+<div class="slide" data-slide="5">
+  <div class="slide-header"><span class="phase-label" style="background:var(--blue);color:var(--teal);">Learn</span></div>
+  <div class="slide-title" style="color:var(--teal);">Quick Check</div>
+  <div class="mc-question">Which of these words is a <strong>noun</strong>?</div>
+  <div class="mc-options" id="mc1Options">
+    <div class="mc-option" data-correct="false" onclick="checkMC(this,'mc1')">quickly</div>
+    <div class="mc-option" data-correct="true" onclick="checkMC(this,'mc1')">library</div>
+    <div class="mc-option" data-correct="false" onclick="checkMC(this,'mc1')">running</div>
+    <div class="mc-option" data-correct="false" onclick="checkMC(this,'mc1')">beautiful</div>
+  </div>
+  <div class="mc-feedback" id="mc1Feedback"></div>
+</div>
+
+<!-- SLIDE 6: NOUN SORT -->
+<div class="slide" data-slide="6">
+  <div class="slide-header"><span class="phase-label" style="background:var(--coral-pale);color:var(--coral);">Practice</span></div>
+  <div class="slide-title" style="color:var(--coral);">Sort the Nouns!</div>
+  <div class="slide-subtitle">Drag each noun into the correct category.</div>
+  <div style="margin-top:12px;">
+    <div class="sort-bank" id="sortBank"></div>
+    <div class="sort-zones" id="sortZones">
+      <div class="sort-zone" data-zone="person"><div class="sort-zone-header szh-person">👤 Person</div></div>
+      <div class="sort-zone" data-zone="place"><div class="sort-zone-header szh-place">🏠 Place</div></div>
+      <div class="sort-zone" data-zone="thing"><div class="sort-zone-header szh-thing">📦 Thing</div></div>
+      <div class="sort-zone" data-zone="animal"><div class="sort-zone-header szh-animal">🐕 Animal</div></div>
+      <div class="sort-zone" data-zone="idea"><div class="sort-zone-header szh-idea">💡 Idea</div></div>
+    </div>
+    <div class="sort-controls">
+      <button class="sort-reset-btn" onclick="resetSort()">Reset</button>
+      <button class="sort-check-btn" onclick="checkSort()">Check My Work</button>
+    </div>
+    <div class="sort-feedback" id="sortFeedback"></div>
+  </div>
+</div>
+
+<!-- SLIDES 7-11: SENTENCE NOUN FINDER (generated by JS) -->
+
+<!-- SLIDE 12: TRICKY NOUNS - Ideas -->
+<div class="slide" data-slide="12">
+  <div class="slide-header"><span class="phase-label" style="background:var(--blue);color:var(--teal);">Learn</span></div>
+  <div class="slide-title" style="color:var(--teal);">Tricky Nouns: Ideas</div>
+  <div class="slide-subtitle">You can't see or touch them — but they're REAL!</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px;">
+    <div style="background:var(--coral-pale);border-radius:var(--radius);padding:18px;text-align:center;">
+      <div style="font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;color:var(--coral);margin-bottom:8px;">❤️ Feelings</div>
+      <div style="font-size:14px;color:var(--text-mid);line-height:1.6;">love, anger<br>happiness, fear</div>
+    </div>
+    <div style="background:var(--teal-pale);border-radius:var(--radius);padding:18px;text-align:center;">
+      <div style="font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;color:var(--teal);margin-bottom:8px;">🛡️ Qualities</div>
+      <div style="font-size:14px;color:var(--text-mid);line-height:1.6;">courage, honesty<br>kindness, beauty</div>
+    </div>
+    <div style="background:var(--yellow-pale);border-radius:var(--radius);padding:18px;text-align:center;">
+      <div style="font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;color:var(--yellow-dark);margin-bottom:8px;">🌐 Concepts</div>
+      <div style="font-size:14px;color:var(--text-mid);line-height:1.6;">freedom, justice<br>peace, time</div>
+    </div>
+  </div>
+  <div class="instruction-note" style="margin-top:16px;">
+    <strong>Remember:</strong> Not every word is a noun!<br>
+    Actions (run, jump) · Describing words (big, red) · Little words (the, a, and) → NOT nouns
+  </div>
+</div>
+
+</div><!-- /slideContainer -->
+
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="goSlide(-1)">← Back</button>
+  <div class="nav-info" id="navInfo">1 / 15</div>
+  <button class="nav-btn primary" id="nextBtn" onclick="goSlide(1)">Next →</button>
+</div>
+
+<script>
+// ═══ LESSON DATA ═══
+const L = {
+  sortWords: {
+    person: ["teacher","brother","cousin"],
+    place: ["beach","library","hospital"],
+    thing: ["pencil","car","backpack"],
+    animal: ["elephant","goldfish","zebra"],
+    idea: ["love","courage","freedom"]
+  },
+  // Sentence finder exercises: words with noun categories marked
+  sentences: [
+    {
+      text: "The cat climbed the tree.",
+      nouns: {cat:"animal", tree:"thing"}
+    },
+    {
+      text: "My friend lives in a big house.",
+      nouns: {friend:"person", house:"place"}
+    },
+    {
+      text: "The students read their books.",
+      nouns: {students:"person", books:"thing"}
+    },
+    {
+      text: "The doctor gave the medicine to her patient at the hospital.",
+      nouns: {doctor:"person", medicine:"thing", patient:"person", hospital:"place"}
+    },
+    {
+      text: "Her kindness brought happiness to everyone.",
+      nouns: {kindness:"idea", happiness:"idea"}
+    }
+  ],
+  review: [
+    {q:"What is a noun?", a:"A naming word — it names a person, place, thing, animal, or idea.", color:"rc-teal"},
+    {q:"What are the 5 categories of nouns?", a:"Person, Place, Thing, Animal, Idea", color:"rc-coral"},
+    {q:"What does NAME IT stand for?", a:"Notice · Ask · Match · Explain · Is There another noun?", color:"rc-yellow"},
+    {q:"What are idea nouns?", a:"Things you can't see or touch but are real — feelings, qualities, and concepts.", color:"rc-blue"},
+    {q:"What's coming next?", a:"Lesson 3: Common vs. Proper Nouns — and then Verbs!", color:"rc-teal"},
+  ]
+};
+
+let stars = 0;
+function addStars(n) {
+  stars += n;
+  const el = document.getElementById('starCount');
+  el.textContent = stars;
+  el.style.transform = 'scale(1.4)';
+  setTimeout(() => el.style.transform = 'scale(1)', 200);
+}
+
+// ═══ POPULATE SORT ═══
+const bank = document.getElementById('sortBank');
+const allSortWords = [];
+Object.entries(L.sortWords).forEach(([cat, words]) => {
+  words.forEach(w => allSortWords.push({word: w, category: cat}));
+});
+shuffle(allSortWords);
+allSortWords.forEach(item => {
+  const el = document.createElement('div');
+  el.className = 'sort-word';
+  el.textContent = item.word;
+  el.draggable = true;
+  el.dataset.word = item.word;
+  el.dataset.correct = item.category;
+  el.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', item.word));
+  el.addEventListener('touchstart', onTouchStart, {passive: false});
+  bank.appendChild(el);
+});
+
+// Sort zone drag/drop
+const zones = document.querySelectorAll('.sort-zone');
+zones.forEach(z => {
+  z.addEventListener('dragover', e => { e.preventDefault(); z.classList.add('drag-over'); });
+  z.addEventListener('dragleave', () => z.classList.remove('drag-over'));
+  z.addEventListener('drop', e => {
+    e.preventDefault(); z.classList.remove('drag-over');
+    const w = e.dataTransfer.getData('text/plain');
+    const el = document.querySelector(`.sort-word[data-word="${w}"]`);
+    if (el) { z.appendChild(el); el.classList.add('placed'); }
+  });
+});
+bank.addEventListener('dragover', e => e.preventDefault());
+bank.addEventListener('drop', e => {
+  e.preventDefault();
+  const w = e.dataTransfer.getData('text/plain');
+  const el = document.querySelector(`.sort-word[data-word="${w}"]`);
+  if (el) { bank.appendChild(el); el.classList.remove('placed','correct','incorrect'); }
+});
+
+// Touch support for sort
+let touchT = null, touchC = null;
+function onTouchStart(e) {
+  e.preventDefault(); touchT = e.target.closest('.sort-word'); if (!touchT) return;
+  touchC = touchT.cloneNode(true);
+  touchC.style.cssText = 'position:fixed;z-index:1000;pointer-events:none;opacity:0.85;transform:scale(1.05)';
+  document.body.appendChild(touchC); moveTc(e.touches[0]);
+  document.addEventListener('touchmove', onTm, {passive: false});
+  document.addEventListener('touchend', onTe);
+}
+function onTm(e) { e.preventDefault(); moveTc(e.touches[0]); }
+function moveTc(t) { if (touchC) { touchC.style.left = (t.clientX-50)+'px'; touchC.style.top = (t.clientY-25)+'px'; } }
+function onTe(e) {
+  if (!touchT || !touchC) return; document.body.removeChild(touchC);
+  const t = e.changedTouches[0], el = document.elementFromPoint(t.clientX, t.clientY), z = el?.closest('.sort-zone');
+  if (z) { z.appendChild(touchT); touchT.classList.add('placed'); }
+  else if (el?.closest('.sort-bank') || el?.closest('#sortBank')) { bank.appendChild(touchT); touchT.classList.remove('placed','correct','incorrect'); }
+  touchT = null; touchC = null;
+  document.removeEventListener('touchmove', onTm); document.removeEventListener('touchend', onTe);
+}
+
+let sortChecked = false;
+function checkSort() {
+  let ok = true;
+  document.querySelectorAll('.sort-word.placed').forEach(el => {
+    const z = el.closest('.sort-zone'); if (!z) return;
+    if (z.dataset.zone === el.dataset.correct) { el.classList.add('correct'); el.classList.remove('incorrect'); }
+    else { el.classList.add('incorrect'); el.classList.remove('correct'); ok = false; }
+  });
+  const fb = document.getElementById('sortFeedback');
+  const unp = document.querySelectorAll('#sortBank .sort-word').length;
+  if (unp > 0) { fb.textContent = `${unp} word${unp > 1 ? 's' : ''} still in the bank!`; fb.className = 'sort-feedback show retry'; }
+  else if (ok) { fb.textContent = 'All correct! ⭐'; fb.className = 'sort-feedback show success'; if (!sortChecked) { addStars(3); sortChecked = true; } fireConfetti(); }
+  else { fb.textContent = 'Some words are in the wrong category. Try again!'; fb.className = 'sort-feedback show retry'; }
+}
+function resetSort() {
+  document.querySelectorAll('.sort-word').forEach(el => {
+    bank.appendChild(el); el.classList.remove('placed','correct','incorrect');
+  });
+  document.getElementById('sortFeedback').className = 'sort-feedback';
+}
+
+// ═══ GENERATE SENTENCE FINDER SLIDES ═══
+const ctn = document.getElementById('slideContainer');
+let si = 7;
+let finderStates = {};
+
+L.sentences.forEach((s, i) => {
+  const d = document.createElement('div'); d.className = 'slide'; d.dataset.slide = si++;
+  const words = s.text.replace(/([.,!?])/g, ' $1').split(/\s+/).filter(w => w);
+  const wordSpans = words.map((w, wi) =>
+    `<span class="finder-word" data-word="${w.replace(/[.,!?]/g,'').toLowerCase()}" data-widx="${wi}" onclick="tagWord(this,${i})">${w}</span>`
+  ).join(' ');
+  d.innerHTML = `
+    <div class="slide-header"><span class="phase-label" style="background:var(--coral-pale);color:var(--coral);">Practice</span></div>
+    <div class="slide-title" style="color:var(--coral);">Find the Nouns!</div>
+    <div class="finder-counter">${i+1} / ${L.sentences.length}</div>
+    <div class="finder-sentence" id="finderSent-${i}">${wordSpans}</div>
+    <div class="finder-toolbar" id="finderTools-${i}">
+      <span class="finder-pen pen-person" onclick="setFinderPen('person',this,${i})">👤 Person</span>
+      <span class="finder-pen pen-place" onclick="setFinderPen('place',this,${i})">🏠 Place</span>
+      <span class="finder-pen pen-thing" onclick="setFinderPen('thing',this,${i})">📦 Thing</span>
+      <span class="finder-pen pen-animal" onclick="setFinderPen('animal',this,${i})">🐕 Animal</span>
+      <span class="finder-pen pen-idea" onclick="setFinderPen('idea',this,${i})">💡 Idea</span>
+      <span class="finder-pen pen-eraser" onclick="setFinderPen('eraser',this,${i})">✕ Eraser</span>
+    </div>
+    <div class="finder-controls">
+      <button class="finder-check-btn" onclick="checkFinder(${i})">Check My Work</button>
+    </div>
+    <div class="finder-feedback" id="finderFb-${i}"></div>`;
+  ctn.appendChild(d);
+  finderStates[i] = {pen: null, checked: false};
+});
+
+// ═══ TRICKY NOUNS slide is already in HTML at data-slide="12" — renumber it ═══
+// The tricky nouns slide needs its data-slide updated
+const trickySlide = document.querySelector('[data-slide="12"]');
+trickySlide.dataset.slide = si++;
+
+// ═══ REVIEW SLIDE ═══
+let d = document.createElement('div'); d.className = 'slide'; d.dataset.slide = si++;
+let h = `<div class="slide-header"><span class="phase-label" style="background:var(--blue-pale);color:var(--teal);">Review</span></div>
+  <div class="slide-title" style="color:var(--teal);">Review</div>
+  <div class="slide-subtitle">Click each card to reveal the answer.</div><div class="review-cards">`;
+L.review.forEach(r => {
+  h += `<div class="review-card ${r.color}" onclick="this.classList.toggle('open')"><div class="q">${r.q}</div><div class="a">${r.a}</div></div>`;
+});
+h += `</div>`;
+d.innerHTML = h; ctn.appendChild(d);
+
+// ═══ CELEBRATION SLIDE ═══
+d = document.createElement('div'); d.className = 'slide celebration'; d.dataset.slide = si++;
+d.innerHTML = `
+  <div class="big-star">⭐</div>
+  <div class="message">Great Work, Noun Hunter!</div>
+  <div class="stats" id="celStats"></div>
+  <button class="start-over-btn" onclick="startOver()">↻ Start Over</button>`;
+ctn.appendChild(d);
+
+// ═══ FINDER PEN & TAGGING ═══
+function setFinderPen(type, btn, sentIdx) {
+  finderStates[sentIdx].pen = type;
+  const toolbar = btn.closest('.finder-toolbar');
+  toolbar.querySelectorAll('.finder-pen').forEach(p => p.classList.remove('active-pen'));
+  btn.classList.add('active-pen');
+}
+
+function tagWord(span, sentIdx) {
+  const pen = finderStates[sentIdx].pen;
+  if (!pen) return;
+  if (pen === 'eraser') {
+    span.className = 'finder-word';
+    span.classList.remove('selected','sel-person','sel-place','sel-thing','sel-animal','sel-idea','wrong');
+  } else {
+    span.classList.remove('sel-person','sel-place','sel-thing','sel-animal','sel-idea','wrong');
+    span.classList.add('selected', 'sel-' + pen);
+  }
+}
+
+function checkFinder(sentIdx) {
+  const s = L.sentences[sentIdx];
+  const container = document.getElementById('finderSent-' + sentIdx);
+  const words = container.querySelectorAll('.finder-word');
+  const fb = document.getElementById('finderFb-' + sentIdx);
+  let allCorrect = true;
+  let nounCount = 0;
+  let foundCount = 0;
+
+  const nounKeys = Object.keys(s.nouns);
+  nounCount = nounKeys.length;
+
+  words.forEach(w => {
+    const cleanWord = w.dataset.word.toLowerCase();
+    const isNoun = s.nouns.hasOwnProperty(cleanWord);
+    const isTagged = w.classList.contains('selected');
+    const taggedCat = ['person','place','thing','animal','idea'].find(c => w.classList.contains('sel-' + c));
+
+    if (isNoun && isTagged && taggedCat === s.nouns[cleanWord]) {
+      // Correct!
+      foundCount++;
+    } else if (isNoun && isTagged && taggedCat !== s.nouns[cleanWord]) {
+      // Right word, wrong category
+      w.classList.add('wrong');
+      allCorrect = false;
+    } else if (!isNoun && isTagged) {
+      // Tagged a non-noun
+      w.classList.add('wrong');
+      allCorrect = false;
+    } else if (isNoun && !isTagged) {
+      // Missed a noun
+      allCorrect = false;
+    }
+  });
+
+  if (allCorrect && foundCount === nounCount) {
+    fb.textContent = `Perfect! You found all ${nounCount} nouns! ⭐`;
+    fb.style.color = 'var(--teal)';
+    if (!finderStates[sentIdx].checked) { addStars(2); finderStates[sentIdx].checked = true; }
+    fireConfetti();
+  } else if (foundCount > 0 && foundCount < nounCount) {
+    fb.textContent = `You found ${foundCount} of ${nounCount} nouns. Keep looking!`;
+    fb.style.color = 'var(--coral)';
+  } else {
+    fb.textContent = 'Not quite — check the highlighted words and try again!';
+    fb.style.color = 'var(--coral)';
+  }
+}
+
+// ═══ CAPS REVIEW ═══
+let capsAnswered = false;
+function checkCaps(btn) {
+  if (capsAnswered) return;
+  const isCorrect = btn.dataset.answer === 'correct';
+  const fb = document.getElementById('capsFeedback');
+  if (isCorrect) {
+    btn.classList.add('chosen');
+    fb.textContent = 'Correct! It needs a period — it\'s a statement. ⭐';
+    fb.style.color = 'var(--teal)';
+    document.getElementById('capsArea').innerHTML = 'The dog barked<span class="fixed">.</span>';
+    addStars(1);
+    capsAnswered = true;
+  } else {
+    btn.classList.add('wrong-choice');
+    fb.textContent = 'Not quite — look again! Does it have a capital T? Does it have punctuation?';
+    fb.style.color = 'var(--coral)';
+    setTimeout(() => { btn.classList.remove('wrong-choice'); fb.textContent = ''; }, 2000);
+  }
+}
+
+// ═══ MULTIPLE CHOICE ═══
+let mcAnswered = {};
+function checkMC(btn, mcId) {
+  if (mcAnswered[mcId]) return;
+  const fb = document.getElementById(mcId + 'Feedback');
+  const isCorrect = btn.dataset.correct === 'true';
+  if (isCorrect) {
+    btn.classList.add('correct-answer');
+    fb.textContent = 'Yes! "Library" is a noun — it names a place. ⭐';
+    fb.style.color = 'var(--teal)';
+    addStars(1);
+    mcAnswered[mcId] = true;
+    // Dim wrong answers
+    btn.closest('.mc-options').querySelectorAll('.mc-option').forEach(o => {
+      if (o !== btn) o.classList.add('wrong-answer');
+    });
+  } else {
+    btn.classList.add('wrong-answer');
+    fb.textContent = 'That\'s not a noun. Does it NAME a person, place, thing, animal, or idea?';
+    fb.style.color = 'var(--coral)';
+    setTimeout(() => { btn.classList.remove('wrong-answer'); fb.textContent = ''; }, 2000);
+  }
+}
+
+// ═══ NAVIGATION ═══
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let cur = 0;
+
+function goSlide(dir) {
+  const next = cur + dir; if (next < 0 || next >= totalSlides) return;
+  slides[cur].classList.remove('active'); cur = next;
+  slides[cur].classList.add('active'); updateNav(); onSlideEnter(cur);
+}
+function goToSlide(idx) {
+  slides[cur].classList.remove('active'); cur = idx;
+  slides[cur].classList.add('active'); updateNav(); onSlideEnter(cur);
+}
+function updateNav() {
+  document.getElementById('prevBtn').disabled = cur === 0;
+  document.getElementById('nextBtn').disabled = cur === totalSlides - 1;
+  document.getElementById('navInfo').textContent = `${cur+1} / ${totalSlides}`;
+  document.getElementById('progressBar').style.width = ((cur+1)/totalSlides*100) + '%';
+}
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goSlide(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); goSlide(-1); }
+});
+updateNav();
+
+function onSlideEnter(idx) {
+  const sl = slides[idx];
+  if (sl.classList.contains('celebration')) {
+    const sentencesCompleted = Object.values(finderStates).filter(s => s.checked).length;
+    document.getElementById('celStats').innerHTML = `
+      <div>⭐ <strong>${stars}</strong> stars earned</div>
+      <div>📝 <strong>${sentencesCompleted}</strong> of ${L.sentences.length} sentences mastered</div>
+      <div>📚 Noun categories: People, Places, Things, Animals, Ideas</div>`;
+    setTimeout(() => fireConfetti(), 300);
+  }
+}
+
+function startOver() {
+  stars = 0; document.getElementById('starCount').textContent = '0';
+  // Reset CAPS
+  capsAnswered = false;
+  document.getElementById('capsArea').innerHTML = 'The dog barked';
+  document.querySelectorAll('.caps-choice').forEach(c => c.classList.remove('chosen','wrong-choice'));
+  document.getElementById('capsFeedback').textContent = '';
+  // Reset MC
+  mcAnswered = {};
+  document.querySelectorAll('.mc-option').forEach(o => o.classList.remove('correct-answer','wrong-answer'));
+  document.querySelectorAll('.mc-feedback').forEach(f => f.textContent = '');
+  // Reset sort
+  sortChecked = false;
+  resetSort();
+  // Reset finders
+  Object.keys(finderStates).forEach(k => { finderStates[k] = {pen: null, checked: false}; });
+  document.querySelectorAll('.finder-word').forEach(w => w.className = 'finder-word');
+  document.querySelectorAll('.finder-pen').forEach(p => p.classList.remove('active-pen'));
+  document.querySelectorAll('[id^="finderFb-"]').forEach(f => f.textContent = '');
+  // Reset review cards
+  document.querySelectorAll('.review-card').forEach(c => c.classList.remove('open'));
+  goToSlide(0);
+}
+
+// ═══ CONFETTI ═══
+function fireConfetti() {
+  const box = document.getElementById('confettiBox');
+  const colors = ['#f3d25b','#d7ecf0','#e66b5d','#3A7D8C','#E091C0'];
+  for (let i = 0; i < 60; i++) {
+    const p = document.createElement('div'); p.className = 'confetti-piece';
+    p.style.left = Math.random()*100 + '%';
+    p.style.background = colors[Math.floor(Math.random()*colors.length)];
+    p.style.animationDelay = (Math.random()*0.8) + 's';
+    p.style.animationDuration = (2+Math.random()*1.5) + 's';
+    p.style.width = (6+Math.random()*8) + 'px';
+    p.style.height = (6+Math.random()*8) + 'px';
+    box.appendChild(p);
+  }
+  setTimeout(() => box.innerHTML = '', 4000);
+}
+function shuffle(a) { for (let i = a.length-1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; }
+</script>
+</body>
+</html>

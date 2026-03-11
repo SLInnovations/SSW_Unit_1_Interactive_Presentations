@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSW Unit 1, Lesson 6: Subject & Predicate – Who's Doing What?</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Open Sans',sans-serif;background:#f0f4f8;color:#1A1A2E;min-height:100vh;display:flex;flex-direction:column}
+.pbar{height:6px;background:#e0e0e0;position:fixed;top:0;left:0;right:0;z-index:100}.pfill{height:100%;background:linear-gradient(90deg,#3A7D8C,#E66B5D);transition:width .4s;width:0}
+.stars{position:fixed;top:14px;right:20px;z-index:100;font-family:Poppins,sans-serif;font-weight:600;font-size:1.1rem;color:#1A1A2E;background:#fff;padding:6px 16px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.1)}.stars .si{color:#F3D25B;margin-right:4px;display:inline-block}.stars.pop .si{animation:sp .4s}@keyframes sp{50%{transform:scale(1.5)}}
+.sc{flex:1;display:flex;align-items:center;justify-content:center;padding:80px 20px 100px}
+.slide{display:none;width:100%;max-width:900px;min-height:480px;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.08);padding:48px;animation:fi .4s}.slide.active{display:block}@keyframes fi{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e0e0e0;padding:12px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
+.nb{font-family:'Open Sans',sans-serif;font-weight:600;font-size:.95rem;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;transition:all .2s}.nb.p{background:#EBF5F8;color:#3A7D8C}.nb.p:hover{background:#D7ECF0}.nb.n{background:#3A7D8C;color:#fff}.nb.n:hover{background:#2d6470}.nb:disabled{opacity:.4;cursor:not-allowed}.sn{font-family:'Open Sans',sans-serif;color:#555;font-size:.9rem}
+.pl{display:inline-block;font-family:'Open Sans',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:12px;margin-bottom:16px}.pl-l{background:#D7ECF0;color:#3A7D8C}.pl-p{background:#FDF0EE;color:#E66B5D}.pl-r{background:#EBF5F8;color:#3A7D8C}
+h1{font-family:Poppins,sans-serif;font-weight:700;color:#3A7D8C;font-size:2rem;margin-bottom:8px}h2{font-family:Poppins,sans-serif;font-weight:600;color:#3A7D8C;font-size:1.5rem;margin-bottom:12px}h3{font-family:Poppins,sans-serif;font-weight:600;color:#E66B5D;font-size:1.15rem;margin-bottom:8px}p{font-family:Poppins,sans-serif;font-size:1.05rem;line-height:1.6;margin-bottom:12px}
+.sub{font-family:Poppins,sans-serif;color:#555;font-size:1.1rem;font-style:italic;margin-bottom:20px}.gb{background:#D7ECF0;border-radius:12px;padding:16px 24px;margin-top:16px;font-family:Poppins,sans-serif;font-size:1rem}.gb strong{color:#3A7D8C}
+.cbig{font-family:Poppins,sans-serif;font-weight:700;font-size:3.5rem;color:#3A7D8C;text-align:center;margin:50px 0 12px}.csub{font-family:Poppins,sans-serif;font-size:1.2rem;color:#555;text-align:center}
+.formula{text-align:center;margin:30px 0;font-family:Poppins,sans-serif}.fb2{display:inline-block;padding:12px 20px;border-radius:12px;font-size:1.1rem;font-weight:600}.f-s{background:#D7ECF0;color:#3A7D8C;border:2px solid #3A7D8C}.f-p{background:#FDF0EE;color:#E66B5D;border:2px solid #E66B5D}.f-eq{font-size:1.5rem;margin:0 10px;color:#555;vertical-align:middle}
+.mc{display:flex;flex-direction:column;gap:10px;margin:16px 0}.mo{font-family:Poppins,sans-serif;font-size:1rem;padding:14px 20px;border:2px solid #D7ECF0;border-radius:10px;cursor:pointer;transition:all .2s;background:#fff}.mo:hover:not(.lk){background:#EBF5F8;border-color:#3A7D8C}.mo.sel{border-color:#3A7D8C;background:#D7ECF0}.mo.ok{border-color:#3A7D8C;background:#D7ECF0;color:#3A7D8C;font-weight:600}.mo.no{border-color:#E66B5D;background:#FDF0EE;color:#E66B5D}.mo.lk{cursor:default}
+.fb{font-family:Poppins,sans-serif;padding:12px 20px;border-radius:10px;margin-top:12px;display:none;font-size:.95rem}.fb.show{display:block}.fb.ok{background:#D7ECF0;color:#3A7D8C}.fb.no{background:#FDF0EE;color:#E66B5D}
+.cbtn{font-family:'Open Sans',sans-serif;font-weight:700;font-size:1rem;padding:12px 32px;border:none;border-radius:10px;cursor:pointer;background:#E66B5D;color:#fff;margin-top:16px;transition:all .2s}.cbtn:hover{background:#d15a4d}.cbtn:disabled{opacity:.5;cursor:not-allowed}
+/* Sentence Word Finder with pen toolbar */
+.toolbar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.pen{font-family:Poppins,sans-serif;font-size:.9rem;padding:8px 18px;border:2px solid #D7ECF0;border-radius:8px;cursor:pointer;background:#fff;transition:all .2s}.pen:hover{background:#EBF5F8}.pen.act{font-weight:600}
+.pen-subj.act{background:#3A7D8C;color:#fff;border-color:#3A7D8C}.pen-pred.act{background:#E66B5D;color:#fff;border-color:#E66B5D}
+.sf{font-family:Poppins,sans-serif;font-size:1.2rem;line-height:2.4;padding:20px;background:#EBF5F8;border-radius:12px;margin-bottom:12px}
+.sw{display:inline-block;padding:4px 10px;margin:3px;border-radius:6px;cursor:pointer;transition:all .2s;border:2px solid transparent}
+.sw:hover{background:#D7ECF0;border-color:#3A7D8C}
+.sw.t-subj{background:#D7ECF0;border-color:#3A7D8C;font-weight:600}.sw.t-pred{background:#FDF0EE;border-color:#E66B5D;font-weight:600}
+.sw.c-ok{opacity:1}.sw.c-no{animation:shake .4s}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.ctr{font-family:Poppins,sans-serif;font-size:.9rem;color:#555;margin-bottom:8px}
+/* Review */
+.rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:20px 0}
+.rc{border-radius:12px;padding:24px;cursor:pointer;transition:all .3s;min-height:120px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:Poppins,sans-serif}.rc .q{font-weight:600;font-size:1.05rem}.rc .a{display:none;font-size:.95rem;line-height:1.5}.rc.flip .q{display:none}.rc.flip .a{display:block}
+.rct{background:#D7ECF0;color:#3A7D8C;border:2px solid #3A7D8C}.rcc{background:#FDF0EE;color:#E66B5D;border:2px solid #E66B5D}.rcy{background:#FFFDF0;color:#9E7F0A;border:2px solid #F3D25B}.rcb{background:#EBF5F8;color:#3A7D8C;border:2px solid #B8D8E3}
+.cel{text-align:center;padding:40px 20px}.cel h1{font-size:2.5rem;color:#3A7D8C;margin-bottom:8px}.tro{font-size:4rem;margin-bottom:16px}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin:24px auto;max-width:500px}.scc{background:#EBF5F8;border-radius:12px;padding:20px;text-align:center}.snm{font-family:Poppins,sans-serif;font-weight:700;font-size:2rem;color:#3A7D8C}.slb{font-family:'Open Sans',sans-serif;font-size:.85rem;color:#555;margin-top:4px}
+.rbtn{font-family:'Open Sans',sans-serif;font-weight:700;font-size:1rem;padding:14px 36px;border:2px solid #3A7D8C;border-radius:10px;cursor:pointer;background:#fff;color:#3A7D8C;margin-top:24px;transition:all .2s}.rbtn:hover{background:#3A7D8C;color:#fff}
+.conf{position:fixed;width:10px;height:10px;z-index:200;pointer-events:none;animation:cf 2.5s ease-out forwards}@keyframes cf{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}
+@media(max-width:700px){.slide{padding:28px 20px}h1{font-size:1.5rem}.cbig{font-size:2.5rem}}@media(max-width:500px){.rg{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="pbar"><div class="pfill" id="pf"></div></div>
+<div class="stars" id="stc"><span class="si">⭐</span> <span id="stn">0</span></div>
+<div class="sc" id="sc2"></div>
+<div class="nav"><button class="nb p" id="pb" onclick="go(-1)">← Back</button><span class="sn" id="sn2"></span><button class="nb n" id="nb2" onclick="go(1)">Next →</button></div>
+<script>
+const L={
+  review:{q:"Is this a <strong>complete sentence</strong> or a <strong>fragment</strong>?<br><em>\"The happy dog.\"</em>",opts:["Complete Sentence","Fragment"],correct:1,
+    ok:"✓ Correct! It's a fragment – there's no predicate. We don't know what the dog DOES.",no:"✗ That's actually a fragment – it has a subject (the dog) but no predicate (no verb)."},
+  qc:{q:"In this sentence, what is the <strong>subject</strong>?<br><em>\"My older brother plays guitar after school.\"</em>",opts:["guitar","plays","brother","school"],correct:2,
+    ok:"✓ Yes! 'Brother' is the subject – WHO is doing something? My brother!",no:"✗ The subject is 'brother' – ask: WHO is playing guitar? My brother!"},
+  finder:[
+    {text:"The big dog ran across the yard.",subj:["dog"],pred:["ran"]},
+    {text:"My teacher gave us homework yesterday.",subj:["teacher"],pred:["gave"]},
+    {text:"Three colorful butterflies flew around the garden.",subj:["butterflies"],pred:["flew"]},
+    {text:"After the storm, the sun came out.",subj:["sun"],pred:["came"]},
+    {text:"The excited children at the party played games.",subj:["children"],pred:["played"]},
+  ],
+  reviewCards:[
+    {q:"What are the 2 detective questions?",a:"1) WHO or WHAT is doing something? (subject)<br>2) WHAT are they doing? (predicate)",s:"rct"},
+    {q:"What is the subject?",a:"The main noun or pronoun doing the action – found by asking WHO or WHAT is doing something.",s:"rcc"},
+    {q:"What is the predicate?",a:"The main verb showing what the subject does – found by asking WHAT are they doing.",s:"rcy"},
+    {q:"Do extra words change the subject?",a:"No! Words like adjectives and phrases add detail, but the core subject is always the main noun.",s:"rcb"},
+    {q:"Do these questions work for any sentence?",a:"Yes! Short or long, simple or complex – the two detective questions always work.",s:"rct"},
+  ],
+};
+
+let cur=0,stars=0,acts=0,total=0,mcS={},fIdx=0,fCorrect=0,activePen=null;
+
+function build(){
+  const c=document.getElementById('sc2');c.innerHTML='';let i=0;
+  // 0 Title
+  c.innerHTML+=`<div class="slide" data-i="${i++}"><span class="pl pl-l">LEARN</span><p style="font-family:Poppins;font-weight:600;color:#E66B5D;font-size:.95rem;margin-bottom:4px">UNIT 1 · LESSON 6</p><h1>Subject & Predicate</h1><p class="sub">Who's Doing What?</p><div class="gb"><strong>Today's Goal:</strong> I can find the subject and predicate in any sentence by asking two detective questions.</div></div>`;
+  // 1 Concept
+  c.innerHTML+=`<div class="slide" data-i="${i++}"><span class="pl pl-l">LEARN</span><div class="cbig">Detective Questions</div><div class="csub">Find the Subject & Predicate in ANY Sentence</div></div>`;
+  // 2 Review
+  c.innerHTML+=`<div class="slide" data-i="${i++}"><span class="pl pl-l">LEARN</span><h2>Quick Review: Barebone Sentences</h2><p>${L.review.q}</p><div class="mc" id="revO"></div><button class="cbtn" id="revB" onclick="chkMC('rev')">Check</button><div class="fb" id="revF"></div></div>`;
+  // 3 Rule – Detective Questions
+  c.innerHTML+=`<div class="slide" data-i="${i++}"><span class="pl pl-l">LEARN</span><h2>The Two Detective Questions</h2><div style="background:#D7ECF0;border-radius:12px;padding:20px;margin:16px 0"><p style="margin:0"><strong style="color:#3A7D8C;font-size:1.1rem">🔍 Question 1 – Find the SUBJECT:</strong></p><p style="font-size:1.15rem;font-weight:600;margin:8px 0 0">"WHO or WHAT is doing something?"</p></div><div style="background:#FDF0EE;border-radius:12px;padding:20px;margin:16px 0"><p style="margin:0"><strong style="color:#E66B5D;font-size:1.1rem">🔍 Question 2 – Find the PREDICATE:</strong></p><p style="font-size:1.15rem;font-weight:600;margin:8px 0 0">"WHAT are they doing?"</p></div><p style="background:#FFFDF0;border:2px solid #F3D25B;border-radius:10px;padding:14px 18px;margin-top:16px"><strong>Example:</strong> "The happy children <u>played</u> in the park."<br>WHO is doing something? → <span style="color:#3A7D8C;font-weight:600">The children</span> · WHAT are they doing? → <span style="color:#E66B5D;font-weight:600">played</span></p></div>`;
+  // 4 Quick Check
+  c.innerHTML+=`<div class="slide" data-i="${i++}"><span class="pl pl-l">LEARN</span><h2>Quick Check</h2><p>${L.qc.q}</p><div class="mc" id="qcO"></div><button class="cbtn" id="qcB" onclick="chkMC('qc')">Check</button><div class="fb" id="qcF"></div></div>`;
+  // 5 Practice – Sentence Word Finder with pen toolbar
+  c.innerHTML+=`<div class="slide" data-i="${i++}" id="fSlide"><span class="pl pl-p">PRACTICE</span><h2>Find Subject & Predicate!</h2><p>Select a pen, then click the word.</p><div class="toolbar"><button class="pen pen-subj" id="penS" onclick="setPen('subj')">🔵 Subject</button><button class="pen pen-pred" id="penP" onclick="setPen('pred')">🔴 Predicate</button></div><div class="ctr" id="fCtr"></div><div class="sf" id="fSent"></div><button class="cbtn" id="fBtn" onclick="chkF()">Check</button><div class="fb" id="fFb"></div></div>`;
+  // 6 Tricky
+  c.innerHTML+=`<div class="slide" data-i="${i++}"><span class="pl pl-l">LEARN</span><h2>Tricky Concepts</h2><div style="background:#FFFDF0;border:2px solid #F3D25B;border-radius:12px;padding:20px;margin-bottom:16px"><h3 style="color:#9E7F0A">🤔 Describing words are NOT the subject</h3><p style="font-size:.95rem">"The <em>big brown</em> dog ran." → Subject = <strong>dog</strong>, not "big brown dog." Adjectives add detail but the core subject is the noun.</p></div><div style="background:#FFFDF0;border:2px solid #F3D25B;border-radius:12px;padding:20px;margin-bottom:16px"><h3 style="color:#9E7F0A">🤔 Sentences that start with phrases</h3><p style="font-size:.95rem">"<em>After the game</em>, the players walked." → "After the game" tells WHEN, not WHO. The subject is <strong>players</strong>.</p></div><div style="background:#FFFDF0;border:2px solid #F3D25B;border-radius:12px;padding:20px"><h3 style="color:#9E7F0A">🤔 The predicate is the VERB</h3><p style="font-size:.95rem">"She ran <em>quickly to the store</em>." → Predicate = <strong>ran</strong>. "Quickly" and "to the store" are extra details.</p></div></div>`;
+  // 7 Review
+  c.innerHTML+=`<div class="slide" data-i="${i++}"><span class="pl pl-r">REVIEW</span><h2>Review – Click to Reveal!</h2><div class="rg" id="rvC"></div></div>`;
+  // 8 Celebration
+  c.innerHTML+=`<div class="slide" data-i="${i++}"><div class="cel"><div class="tro">🏆</div><h1>Great Detective Work!</h1><p class="sub">You can find subjects and predicates in any sentence!</p><div class="sg"><div class="scc"><div class="snm" id="fs2">0</div><div class="slb">Stars Earned</div></div><div class="scc"><div class="snm" id="fa2">0</div><div class="slb">Activities Completed</div></div></div><button class="rbtn" onclick="restart()">🔄 Start Over</button></div></div>`;
+  total=i;init();show(0);
+}
+
+function init(){
+  mkMC('revO',L.review.opts,'rev');mkMC('qcO',L.qc.opts,'qc');loadF();mkRV();
+}
+function mkMC(id,opts,pfx){document.getElementById(id).innerHTML=opts.map((o,i)=>`<div class="mo" id="${pfx}${i}" onclick="selMC('${pfx}',${i})">${o}</div>`).join('');}
+function selMC(pfx,i){const c=document.getElementById(pfx==='rev'?'revO':'qcO');if(c.querySelector('.lk'))return;mcS[pfx]=i;c.querySelectorAll('.mo').forEach((o,j)=>o.classList.toggle('sel',j===i));}
+function chkMC(pfx){const d=pfx==='rev'?L.review:L.qc,c=document.getElementById(pfx==='rev'?'revO':'qcO'),fb=document.getElementById(pfx+'F'),s=mcS[pfx];if(s===undefined)return;c.querySelectorAll('.mo').forEach(o=>o.classList.add('lk'));document.getElementById(pfx+'B').disabled=true;if(s===d.correct){c.children[s].classList.add('ok');fb.className='fb show ok';fb.innerHTML=d.ok;addS(1);}else{c.children[s].classList.add('no');c.children[d.correct].classList.add('ok');fb.className='fb show no';fb.innerHTML=d.no;}acts++;}
+
+// Pen toolbar
+function setPen(type){activePen=activePen===type?null:type;document.getElementById('penS').classList.toggle('act',activePen==='subj');document.getElementById('penP').classList.toggle('act',activePen==='pred');}
+
+// Sentence Finder
+function loadF(){
+  if(fIdx>=L.finder.length){document.getElementById('fSent').innerHTML='<p style="text-align:center;color:#3A7D8C;font-weight:600;font-size:1.2rem">🎉 All sentences complete!</p>';document.getElementById('fBtn').style.display='none';document.getElementById('fCtr').textContent='';document.querySelector('.toolbar').style.display='none';return;}
+  const s=L.finder[fIdx];document.getElementById('fCtr').textContent=`Sentence ${fIdx+1} of ${L.finder.length}`;
+  const words=s.text.replace(/([.,!?])/g,' $1').split(/\s+/);
+  document.getElementById('fSent').innerHTML=words.map(w=>{const cl=w.replace(/[.,!?]/g,'');return`<span class="sw" data-w="${cl.toLowerCase()}" onclick="tagW(this)">${w}</span>`;}).join(' ');
+  document.getElementById('fBtn').disabled=false;document.getElementById('fFb').className='fb';
+}
+function tagW(el){
+  if(!activePen||el.classList.contains('c-ok'))return;
+  // Toggle: if already tagged with this pen, remove; if tagged with other, switch
+  if(activePen==='subj'){
+    if(el.classList.contains('t-subj')){el.classList.remove('t-subj');}
+    else{el.classList.remove('t-pred');el.classList.add('t-subj');}
+  }else{
+    if(el.classList.contains('t-pred')){el.classList.remove('t-pred');}
+    else{el.classList.remove('t-subj');el.classList.add('t-pred');}
+  }
+}
+function chkF(){
+  const s=L.finder[fIdx],ws=document.querySelectorAll('#fSent .sw'),fb=document.getElementById('fFb');
+  let subjOk=true,predOk=true,subjCount=0,predCount=0;
+  ws.forEach(w=>{
+    const isSubj=s.subj.includes(w.dataset.w),isPred=s.pred.includes(w.dataset.w);
+    const taggedSubj=w.classList.contains('t-subj'),taggedPred=w.classList.contains('t-pred');
+    if(isSubj&&taggedSubj)subjCount++;
+    else if(isSubj&&!taggedSubj)subjOk=false;
+    else if(!isSubj&&taggedSubj)subjOk=false;
+    if(isPred&&taggedPred)predCount++;
+    else if(isPred&&!taggedPred)predOk=false;
+    else if(!isPred&&taggedPred)predOk=false;
+  });
+  if(subjOk&&predOk&&subjCount===s.subj.length&&predCount===s.pred.length){
+    ws.forEach(w=>w.classList.add('c-ok'));
+    fb.className='fb show ok';fb.innerHTML=`✓ Perfect! Subject: <strong style="color:#3A7D8C">${s.subj.join(', ')}</strong> · Predicate: <strong style="color:#E66B5D">${s.pred.join(', ')}</strong>`;
+    addS(2);acts++;fCorrect++;fIdx++;
+    setTimeout(()=>{fb.classList.remove('show');loadF();},2000);
+  }else{
+    fb.className='fb show no';fb.innerHTML='Not quite – use the detective questions! WHO is doing something? WHAT are they doing?';
+    setTimeout(()=>{ws.forEach(w=>{if(!w.classList.contains('c-ok')){w.classList.remove('t-subj','t-pred','c-no');}});fb.classList.remove('show');},1500);
+  }
+}
+
+function mkRV(){document.getElementById('rvC').innerHTML=L.reviewCards.map(c=>`<div class="rc ${c.s}" onclick="this.classList.toggle('flip')"><div class="q">${c.q}</div><div class="a">${c.a}</div></div>`).join('');}
+
+function addS(n){stars+=n;document.getElementById('stn').textContent=stars;const s=document.getElementById('stc');s.classList.add('pop');setTimeout(()=>s.classList.remove('pop'),400);}
+function confetti(){const cols=['#E66B5D','#3A7D8C','#F3D25B','#D7ECF0','#ff6b9d'];for(let i=0;i<60;i++){const p=document.createElement('div');p.className='conf';p.style.left=Math.random()*100+'vw';p.style.top='-10px';p.style.background=cols[Math.floor(Math.random()*cols.length)];p.style.borderRadius=Math.random()>.5?'50%':'2px';p.style.width=(Math.random()*8+6)+'px';p.style.height=(Math.random()*8+6)+'px';p.style.animationDuration=(Math.random()*1.5+1.5)+'s';p.style.animationDelay=(Math.random()*.5)+'s';document.body.appendChild(p);setTimeout(()=>p.remove(),3000);}}
+
+function show(i){document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));const sl=document.querySelectorAll('.slide');if(sl[i])sl[i].classList.add('active');cur=i;document.getElementById('sn2').textContent=`${i+1} / ${total}`;document.getElementById('pb').disabled=i===0;document.getElementById('nb2').textContent=i===total-1?'Finish':'Next →';document.getElementById('pf').style.width=((i+1)/total*100)+'%';if(i===total-1){document.getElementById('fs2').textContent=stars;document.getElementById('fa2').textContent=acts;confetti();}}
+function go(d){const n=cur+d;if(n>=0&&n<total)show(n);}
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(1);}if(e.key==='ArrowLeft'){e.preventDefault();go(-1);}});
+function restart(){stars=0;acts=0;fIdx=0;fCorrect=0;mcS={};activePen=null;document.getElementById('stn').textContent='0';build();}
+build();
+</script>
+</body>
+</html>

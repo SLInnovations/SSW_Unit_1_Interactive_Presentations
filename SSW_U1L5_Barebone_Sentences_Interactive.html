@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSW Unit 1, Lesson 5: Barebone Sentences</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Open Sans',sans-serif;background:#f0f4f8;color:#1A1A2E;min-height:100vh;display:flex;flex-direction:column}
+.progress-bar{height:6px;background:#e0e0e0;position:fixed;top:0;left:0;right:0;z-index:100}
+.progress-fill{height:100%;background:linear-gradient(90deg,#3A7D8C,#E66B5D);transition:width .4s ease;width:0}
+.star-counter{position:fixed;top:14px;right:20px;z-index:100;font-family:'Poppins',sans-serif;font-weight:600;font-size:1.1rem;color:#1A1A2E;background:#fff;padding:6px 16px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.star-counter .si{color:#F3D25B;margin-right:4px;display:inline-block;transition:transform .3s}
+.star-counter.pop .si{animation:starPop .4s ease}
+@keyframes starPop{0%{transform:scale(1)}50%{transform:scale(1.5)}100%{transform:scale(1)}}
+.slide-container{flex:1;display:flex;align-items:center;justify-content:center;padding:80px 20px 100px}
+.slide{display:none;width:100%;max-width:900px;min-height:480px;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.08);padding:48px;animation:fadeIn .4s ease}
+.slide.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e0e0e0;padding:12px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
+.nb{font-family:'Open Sans',sans-serif;font-weight:600;font-size:.95rem;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.nb.prev{background:#EBF5F8;color:#3A7D8C}.nb.prev:hover{background:#D7ECF0}
+.nb.next{background:#3A7D8C;color:#fff}.nb.next:hover{background:#2d6470}
+.nb:disabled{opacity:.4;cursor:not-allowed}
+.sn{font-family:'Open Sans',sans-serif;color:#555;font-size:.9rem}
+.pl{display:inline-block;font-family:'Open Sans',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:12px;margin-bottom:16px}
+.pl-l{background:#D7ECF0;color:#3A7D8C}.pl-p{background:#FDF0EE;color:#E66B5D}.pl-r{background:#EBF5F8;color:#3A7D8C}
+h1{font-family:'Poppins',sans-serif;font-weight:700;color:#3A7D8C;font-size:2rem;margin-bottom:8px;line-height:1.2}
+h2{font-family:'Poppins',sans-serif;font-weight:600;color:#3A7D8C;font-size:1.5rem;margin-bottom:12px}
+h3{font-family:'Poppins',sans-serif;font-weight:600;color:#E66B5D;font-size:1.15rem;margin-bottom:8px}
+p{font-family:'Poppins',sans-serif;font-size:1.05rem;line-height:1.6;margin-bottom:12px}
+.sub{font-family:'Poppins',sans-serif;color:#555;font-size:1.1rem;font-style:italic;margin-bottom:20px}
+.gb{background:#D7ECF0;border-radius:12px;padding:16px 24px;margin-top:16px;font-family:'Poppins',sans-serif;font-size:1rem}
+.gb strong{color:#3A7D8C}
+.cbig{font-family:'Poppins',sans-serif;font-weight:700;font-size:4rem;color:#3A7D8C;text-align:center;margin:60px 0 20px}
+.csub{font-family:'Poppins',sans-serif;font-size:1.2rem;color:#555;text-align:center}
+.formula{text-align:center;margin:30px 0;font-family:'Poppins',sans-serif}
+.formula-box{display:inline-block;padding:12px 24px;border-radius:12px;font-size:1.3rem;font-weight:600}
+.formula-subj{background:#D7ECF0;color:#3A7D8C;border:2px solid #3A7D8C}
+.formula-plus{font-size:1.5rem;margin:0 12px;color:#555;vertical-align:middle}
+.formula-pred{background:#FDF0EE;color:#E66B5D;border:2px solid #E66B5D}
+.formula-eq{font-size:1.5rem;margin:0 12px;color:#555;vertical-align:middle}
+.formula-sent{background:#FFFDF0;color:#9E7F0A;border:2px solid #F3D25B}
+.mc-opts{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.mc-o{font-family:'Poppins',sans-serif;font-size:1rem;padding:14px 20px;border:2px solid #D7ECF0;border-radius:10px;cursor:pointer;transition:all .2s;background:#fff}
+.mc-o:hover:not(.lk){background:#EBF5F8;border-color:#3A7D8C}
+.mc-o.sel{border-color:#3A7D8C;background:#D7ECF0}
+.mc-o.ok{border-color:#3A7D8C;background:#D7ECF0;color:#3A7D8C;font-weight:600}
+.mc-o.no{border-color:#E66B5D;background:#FDF0EE;color:#E66B5D}
+.mc-o.lk{cursor:default}
+.fb{font-family:'Poppins',sans-serif;padding:12px 20px;border-radius:10px;margin-top:12px;display:none;font-size:.95rem}
+.fb.show{display:block}.fb.ok{background:#D7ECF0;color:#3A7D8C}.fb.no{background:#FDF0EE;color:#E66B5D}
+.cbtn{font-family:'Open Sans',sans-serif;font-weight:700;font-size:1rem;padding:12px 32px;border:none;border-radius:10px;cursor:pointer;background:#E66B5D;color:#fff;margin-top:16px;transition:all .2s}
+.cbtn:hover{background:#d15a4d}.cbtn:disabled{opacity:.5;cursor:not-allowed}
+/* Sentence Builder */
+.sb-area{margin:20px 0}
+.sb-bank{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;min-height:50px;padding:12px;background:#f8f8f8;border-radius:10px}
+.sb-target{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;min-height:60px;padding:16px;background:#EBF5F8;border-radius:12px;border:2px dashed #3A7D8C}
+.sb-tile{font-family:'Poppins',sans-serif;font-size:1rem;padding:10px 18px;background:#fff;border:2px solid #D7ECF0;border-radius:8px;cursor:pointer;transition:all .2s;user-select:none}
+.sb-tile:hover{border-color:#3A7D8C;background:#EBF5F8}
+.sb-tile.placed{opacity:.3;cursor:default}
+.sb-tile.in-target{background:#fff;border-color:#3A7D8C;cursor:pointer}
+.sb-tile.correct-pos{border-color:#3A7D8C;background:#D7ECF0}
+.sb-tile.wrong-pos{border-color:#E66B5D;background:#FDF0EE;animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.sb-label{font-family:'Poppins',sans-serif;font-size:.9rem;color:#555;margin-bottom:4px}
+.sb-counter{font-family:'Poppins',sans-serif;font-size:.9rem;color:#555;margin-bottom:12px}
+/* Complete or Fragment sort */
+.cf-card{font-family:'Poppins',sans-serif;font-size:1.1rem;padding:16px 24px;background:#fff;border:2px solid #D7ECF0;border-radius:12px;margin:10px 0;cursor:pointer;transition:all .2s;text-align:center}
+.cf-card:hover:not(.done){border-color:#3A7D8C;background:#EBF5F8}
+.cf-card.done{cursor:default}
+.cf-card.c-ok{border-color:#3A7D8C;background:#D7ECF0}
+.cf-card.c-no{border-color:#E66B5D;background:#FDF0EE}
+.cf-btns{display:flex;gap:12px;justify-content:center;margin:16px 0}
+.cf-btn{font-family:'Poppins',sans-serif;font-weight:600;font-size:1rem;padding:12px 28px;border-radius:10px;cursor:pointer;transition:all .2s;border:2px solid}
+.cf-btn.cs{background:#D7ECF0;color:#3A7D8C;border-color:#3A7D8C}
+.cf-btn.cs:hover{background:#3A7D8C;color:#fff}
+.cf-btn.fr{background:#FDF0EE;color:#E66B5D;border-color:#E66B5D}
+.cf-btn.fr:hover{background:#E66B5D;color:#fff}
+.cf-btn.active{font-weight:700;transform:scale(1.05)}
+/* Review */
+.rv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:20px 0}
+.rv-card{border-radius:12px;padding:24px;cursor:pointer;transition:all .3s;min-height:120px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Poppins',sans-serif}
+.rv-card .q{font-weight:600;font-size:1.05rem}.rv-card .a{display:none;font-size:.95rem;line-height:1.5}
+.rv-card.flip .q{display:none}.rv-card.flip .a{display:block}
+.rc-t{background:#D7ECF0;color:#3A7D8C;border:2px solid #3A7D8C}
+.rc-c{background:#FDF0EE;color:#E66B5D;border:2px solid #E66B5D}
+.rc-y{background:#FFFDF0;color:#9E7F0A;border:2px solid #F3D25B}
+.rc-b{background:#EBF5F8;color:#3A7D8C;border:2px solid #B8D8E3}
+/* Celebration */
+.cel{text-align:center;padding:40px 20px}
+.cel h1{font-size:2.5rem;color:#3A7D8C;margin-bottom:8px}
+.tro{font-size:4rem;margin-bottom:16px}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin:24px auto;max-width:500px}
+.sc{background:#EBF5F8;border-radius:12px;padding:20px;text-align:center}
+.snum{font-family:'Poppins',sans-serif;font-weight:700;font-size:2rem;color:#3A7D8C}
+.slab{font-family:'Open Sans',sans-serif;font-size:.85rem;color:#555;margin-top:4px}
+.rbtn{font-family:'Open Sans',sans-serif;font-weight:700;font-size:1rem;padding:14px 36px;border:2px solid #3A7D8C;border-radius:10px;cursor:pointer;background:#fff;color:#3A7D8C;margin-top:24px;transition:all .2s}
+.rbtn:hover{background:#3A7D8C;color:#fff}
+.conf{position:fixed;width:10px;height:10px;z-index:200;pointer-events:none;animation:cfall 2.5s ease-out forwards}
+@keyframes cfall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}
+@media(max-width:700px){.slide{padding:28px 20px}h1{font-size:1.5rem}.cbig{font-size:3rem}.formula-box{font-size:1rem;padding:8px 14px}.formula-plus,.formula-eq{font-size:1.1rem;margin:0 6px}}
+@media(max-width:500px){.rv-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+<div class="star-counter" id="sc"><span class="si">⭐</span> <span id="sn">0</span></div>
+<div class="slide-container" id="sc2"></div>
+<div class="nav-bar">
+  <button class="nb prev" id="pb" onclick="nav(-1)">← Back</button>
+  <span class="sn" id="snum2"></span>
+  <button class="nb next" id="nb2" onclick="nav(1)">Next →</button>
+</div>
+
+<script>
+const L={
+  review:{
+    question:"Which of these is a <strong>verb</strong> (action word)?",
+    options:["pencil","jumped","happy","school"],
+    correct:1,
+    rightMsg:"✓ Correct! 'Jumped' is a verb – it's an action word!",
+    wrongMsg:"✗ Not quite. 'Jumped' is the verb – it tells us an action someone did."
+  },
+  quickCheck:{
+    question:"Which is a <strong>complete barebone sentence</strong>?",
+    options:["The big dog.","Running fast.","Birds fly.","In the park."],
+    correct:2,
+    rightMsg:"✓ Yes! 'Birds fly.' has a subject (Birds) and a predicate (fly) – it's complete!",
+    wrongMsg:"✗ 'Birds fly.' is the complete sentence – it has both a subject (Birds) and a predicate (fly)."
+  },
+  builderSentences:[
+    {words:["Dogs","bark","."],display:"Dogs bark."},
+    {words:["The","baby","cried","."],display:"The baby cried."},
+    {words:["Rain","fell","."],display:"Rain fell."},
+    {words:["Students","learn","."],display:"Students learn."},
+    {words:["The","cat","sleeps","."],display:"The cat sleeps."},
+  ],
+  cfItems:[
+    {text:"The cat sleeps.",type:"cs"},
+    {text:"Running down the street.",type:"f"},
+    {text:"My best friend.",type:"f"},
+    {text:"Birds fly.",type:"cs"},
+    {text:"In the big box.",type:"f"},
+    {text:"The teacher explained.",type:"cs"},
+    {text:"After school today.",type:"f"},
+    {text:"The baby laughed.",type:"cs"},
+  ],
+  reviewCards:[
+    {q:"What is a barebone sentence?",a:"The simplest complete sentence – just a subject and a predicate, nothing extra.",s:"rc-t"},
+    {q:"What are the two parts?",a:"SUBJECT (who/what) + PREDICATE (what they do)",s:"rc-c"},
+    {q:"How do you find the subject?",a:'Ask: "WHO or WHAT is this sentence about?"',s:"rc-y"},
+    {q:"How do you find the predicate?",a:'Ask: "WHAT does the subject DO?"',s:"rc-b"},
+    {q:"What is a fragment?",a:"A group of words that is NOT a complete sentence – it's missing the subject, the predicate, or both.",s:"rc-t"},
+  ],
+};
+
+let cur=0,stars=0,acts=0,total=0;
+let mcSel={},sbIdx=0,sbCorrect=0,cfIdx=0,cfCorrect=0;
+
+function build(){
+  const c=document.getElementById('sc2');c.innerHTML='';let i=0;
+  // 0: Title
+  c.innerHTML+=`<div class="slide" data-i="${i++}"><span class="pl pl-l">LEARN</span><p style="font-family:Poppins;font-weight:600;color:#E66B5D;font-size:.95rem;margin-bottom:4px">UNIT 1 · LESSON 5</p><h1>Barebone Sentences</h1><p class="sub">The Simplest Complete Sentences</p><div class="gb"><strong>Today's Goal:</strong> I can identify complete sentences and understand that every sentence needs a subject (who/what) and a predicate (what they do).</div></div>`;
+  // 1: Concept
+  c.innerHTML+=`<div class="slide" data-i="${i++}"><span class="pl pl-l">LEARN</span><div class="cbig">Barebone Sentence</div><div class="csub">Subject + Predicate</div></div>`;
+  // 2: Review
+  c.innerHTML+=`<div class="slide" data-i="${i++}" id="revSlide"><span class="pl pl-l">LEARN</span><h2>Quick Review: Verbs</h2><p>${L.review.question}</p><div class="mc-opts" id="revO"></div><button class="cbtn" id="revBtn" onclick="checkMC('rev')">Check</button><div class="fb" id="revFb"></div></div>`;
+  // 3: Rule
+  c.innerHTML+=`<div class="slide" data-i="${i++}"><span class="pl pl-l">LEARN</span><h2>The Two Essential Parts</h2><div class="formula"><span class="formula-box formula-subj">SUBJECT<br><small>who / what</small></span><span class="formula-plus">+</span><span class="formula-box formula-pred">PREDICATE<br><small>what they do</small></span><span class="formula-eq">=</span><span class="formula-box formula-sent">COMPLETE<br>SENTENCE ✓</span></div><p style="margin-top:20px"><strong style="color:#3A7D8C">Subject</strong> = WHO or WHAT the sentence is about (usually a noun)</p><p><strong style="color:#E66B5D">Predicate</strong> = What the subject DOES (always has a verb)</p><p style="background:#FFFDF0;border:2px solid #F3D25B;border-radius:10px;padding:12px 16px;margin-top:12px"><strong>Example:</strong> <span style="color:#3A7D8C;font-weight:600">Birds</span> <span style="color:#E66B5D;font-weight:600">fly.</span> → Subject + Predicate = Complete!</p></div>`;
+  // 4: Quick Check
+  c.innerHTML+=`<div class="slide" data-i="${i++}" id="qcSlide"><span class="pl pl-l">LEARN</span><h2>Quick Check</h2><p>${L.quickCheck.question}</p><div class="mc-opts" id="qcO"></div><button class="cbtn" id="qcBtn" onclick="checkMC('qc')">Check</button><div class="fb" id="qcFb"></div></div>`;
+  // 5: Practice – Sentence Builder
+  c.innerHTML+=`<div class="slide" data-i="${i++}" id="sbSlide"><span class="pl pl-p">PRACTICE</span><h2>Build a Sentence!</h2><p>Tap the words in the correct order to build a complete sentence.</p><div class="sb-counter" id="sbCount"></div><div class="sb-area"><div class="sb-label">Your sentence:</div><div class="sb-target" id="sbTarget"></div><div class="sb-label">Word bank:</div><div class="sb-bank" id="sbBank"></div></div><button class="cbtn" id="sbBtn" onclick="checkSB()">Check</button><div class="fb" id="sbFb"></div></div>`;
+  // 6: Practice – Complete or Fragment
+  c.innerHTML+=`<div class="slide" data-i="${i++}" id="cfSlide"><span class="pl pl-p">PRACTICE</span><h2>Complete or Fragment?</h2><p>Read each group of words, then decide!</p><div class="sb-counter" id="cfCount"></div><div class="cf-card" id="cfCard"></div><div class="cf-btns"><button class="cf-btn cs" onclick="answerCF('cs')">✓ Complete Sentence</button><button class="cf-btn fr" onclick="answerCF('f')">✗ Fragment</button></div><div class="fb" id="cfFb"></div></div>`;
+  // 7: Tricky
+  c.innerHTML+=`<div class="slide" data-i="${i++}"><span class="pl pl-l">LEARN</span><h2>Tricky Concepts</h2><div style="background:#FFFDF0;border:2px solid #F3D25B;border-radius:12px;padding:20px;margin-bottom:16px"><h3 style="color:#9E7F0A">🤔 Short ≠ Incomplete</h3><p style="font-size:.95rem">"<strong>I ran.</strong>" is only two words, but it's a <em>complete</em> sentence! It has a subject (I) and a predicate (ran). Length doesn't matter – having both parts does.</p></div><div style="background:#FFFDF0;border:2px solid #F3D25B;border-radius:12px;padding:20px;margin-bottom:16px"><h3 style="color:#9E7F0A">🤔 Long ≠ Complete</h3><p style="font-size:.95rem">"<strong>The very tall building on the corner near the park.</strong>" is long, but it's a <em>fragment</em>! It has no verb – we don't know what the building DOES.</p></div><div style="background:#FFFDF0;border:2px solid #F3D25B;border-radius:12px;padding:20px"><h3 style="color:#9E7F0A">🤔 Check BOTH parts every time</h3><p style="font-size:.95rem">Always ask two questions: <strong>1) Is there a subject?</strong> <strong>2) Is there a predicate?</strong> Both must be YES for a complete sentence.</p></div></div>`;
+  // 8: Review Cards
+  c.innerHTML+=`<div class="slide" data-i="${i++}"><span class="pl pl-r">REVIEW</span><h2>Review – Click to Reveal!</h2><div class="rv-grid" id="rvCards"></div></div>`;
+  // 9: Celebration
+  c.innerHTML+=`<div class="slide" data-i="${i++}" id="celSlide"><div class="cel"><div class="tro">🏆</div><h1>Fantastic Work!</h1><p class="sub">You understand barebone sentences!</p><div class="sg"><div class="sc"><div class="snum" id="fs">0</div><div class="slab">Stars Earned</div></div><div class="sc"><div class="snum" id="fa">0</div><div class="slab">Activities Completed</div></div></div><button class="rbtn" onclick="startOver()">🔄 Start Over</button></div></div>`;
+  total=i;
+  initAll();
+  showSlide(0);
+}
+
+function initAll(){
+  buildMCOpts('revO',L.review.options,'rev');
+  buildMCOpts('qcO',L.quickCheck.options,'qc');
+  loadSB();
+  loadCF();
+  buildRV();
+}
+
+// MC
+function buildMCOpts(id,opts,pfx){
+  document.getElementById(id).innerHTML=opts.map((o,i)=>`<div class="mc-o" id="${pfx}_${i}" onclick="selMC('${pfx}',${i})">${o}</div>`).join('');
+}
+function selMC(pfx,i){
+  const c=document.getElementById(pfx==='rev'?'revO':'qcO');
+  if(c.querySelector('.lk'))return;
+  mcSel[pfx]=i;
+  c.querySelectorAll('.mc-o').forEach((o,j)=>o.classList.toggle('sel',j===i));
+}
+function checkMC(pfx){
+  const data=pfx==='rev'?L.review:L.quickCheck;
+  const c=document.getElementById(pfx==='rev'?'revO':'qcO');
+  const fb=document.getElementById(pfx+'Fb');
+  const sel=mcSel[pfx];if(sel===undefined)return;
+  c.querySelectorAll('.mc-o').forEach(o=>o.classList.add('lk'));
+  document.getElementById(pfx+'Btn').disabled=true;
+  if(sel===data.correct){
+    c.children[sel].classList.add('ok');
+    fb.className='fb show ok';fb.innerHTML=data.rightMsg;addStars(1);
+  }else{
+    c.children[sel].classList.add('no');c.children[data.correct].classList.add('ok');
+    fb.className='fb show no';fb.innerHTML=data.wrongMsg;
+  }
+  acts++;
+}
+
+// Sentence Builder
+function loadSB(){
+  if(sbIdx>=L.builderSentences.length){
+    document.getElementById('sbTarget').innerHTML='<p style="text-align:center;color:#3A7D8C;font-weight:600;font-size:1.2rem">🎉 All sentences built!</p>';
+    document.getElementById('sbBank').innerHTML='';
+    document.getElementById('sbBtn').style.display='none';
+    document.getElementById('sbCount').textContent='';
+    return;
+  }
+  const s=L.builderSentences[sbIdx];
+  document.getElementById('sbCount').textContent=`Sentence ${sbIdx+1} of ${L.builderSentences.length}`;
+  document.getElementById('sbTarget').innerHTML='';
+  document.getElementById('sbBtn').disabled=false;
+  document.getElementById('sbBtn').textContent='Check';
+  document.getElementById('sbFb').className='fb';
+  const shuffled=[...s.words].sort(()=>Math.random()-.5);
+  document.getElementById('sbBank').innerHTML=shuffled.map((w,i)=>`<div class="sb-tile" data-w="${w}" data-i="${i}" onclick="tapTile(this)">${w}</div>`).join('');
+}
+function tapTile(el){
+  if(el.classList.contains('placed')||el.classList.contains('correct-pos'))return;
+  const tgt=document.getElementById('sbTarget');
+  const bank=document.getElementById('sbBank');
+  if(el.parentElement===tgt){
+    // Move back to bank
+    el.classList.remove('in-target');
+    bank.appendChild(el);
+  }else{
+    el.classList.add('in-target');
+    tgt.appendChild(el);
+  }
+}
+function checkSB(){
+  const s=L.builderSentences[sbIdx];
+  const tgt=document.getElementById('sbTarget');
+  const tiles=[...tgt.querySelectorAll('.sb-tile')];
+  const fb=document.getElementById('sbFb');
+  if(tiles.length===0)return;
+  const built=tiles.map(t=>t.dataset.w);
+  const correct=built.every((w,i)=>w===s.words[i])&&built.length===s.words.length;
+  if(correct){
+    tiles.forEach(t=>{t.classList.add('correct-pos');t.classList.remove('in-target');});
+    fb.className='fb show ok';fb.innerHTML=`✓ Perfect! "${s.display}" is a complete barebone sentence!`;
+    addStars(2);acts++;sbCorrect++;sbIdx++;
+    setTimeout(()=>{fb.classList.remove('show');loadSB();},2000);
+  }else{
+    tiles.forEach(t=>{t.classList.add('wrong-pos');});
+    fb.className='fb show no';fb.innerHTML='Not quite – check the word order and try again!';
+    setTimeout(()=>{
+      tiles.forEach(t=>{t.classList.remove('wrong-pos','in-target');document.getElementById('sbBank').appendChild(t);});
+      fb.classList.remove('show');
+    },1200);
+  }
+}
+
+// Complete or Fragment
+function loadCF(){
+  if(cfIdx>=L.cfItems.length){
+    document.getElementById('cfCard').innerHTML='<p style="color:#3A7D8C;font-weight:600;font-size:1.2rem">🎉 All done!</p>';
+    document.getElementById('cfCard').classList.add('done');
+    document.querySelector('.cf-btns').style.display='none';
+    document.getElementById('cfCount').textContent='';
+    return;
+  }
+  document.getElementById('cfCount').textContent=`Item ${cfIdx+1} of ${L.cfItems.length}`;
+  document.getElementById('cfCard').textContent=L.cfItems[cfIdx].text;
+  document.getElementById('cfCard').className='cf-card';
+  document.getElementById('cfFb').className='fb';
+}
+function answerCF(ans){
+  const item=L.cfItems[cfIdx];if(!item)return;
+  const card=document.getElementById('cfCard');
+  const fb=document.getElementById('cfFb');
+  if(card.classList.contains('done'))return;
+  card.classList.add('done');
+  if(ans===item.type){
+    card.classList.add('c-ok');
+    fb.className='fb show ok';
+    fb.innerHTML=item.type==='cs'?'✓ Correct! That\'s a complete sentence – it has both a subject and a predicate.':'✓ Correct! That\'s a fragment – it\'s missing a subject, predicate, or both.';
+    addStars(1);cfCorrect++;
+  }else{
+    card.classList.add('c-no');
+    fb.className='fb show no';
+    fb.innerHTML=item.type==='cs'?'✗ Actually, that IS a complete sentence – it has both parts!':'✗ Actually, that\'s a fragment – it\'s missing the subject, predicate, or both.';
+  }
+  acts++;cfIdx++;
+  setTimeout(()=>{fb.classList.remove('show');loadCF();},1800);
+}
+
+// Review Cards
+function buildRV(){
+  document.getElementById('rvCards').innerHTML=L.reviewCards.map(c=>`<div class="rv-card ${c.s}" onclick="this.classList.toggle('flip')"><div class="q">${c.q}</div><div class="a">${c.a}</div></div>`).join('');
+}
+
+// Stars & Confetti
+function addStars(n){
+  stars+=n;document.getElementById('sn').textContent=stars;
+  const s=document.getElementById('sc');s.classList.add('pop');setTimeout(()=>s.classList.remove('pop'),400);
+}
+function confetti(){
+  const cols=['#E66B5D','#3A7D8C','#F3D25B','#D7ECF0','#ff6b9d'];
+  for(let i=0;i<60;i++){
+    const p=document.createElement('div');p.className='conf';
+    p.style.left=Math.random()*100+'vw';p.style.top='-10px';
+    p.style.background=cols[Math.floor(Math.random()*cols.length)];
+    p.style.borderRadius=Math.random()>.5?'50%':'2px';
+    p.style.width=(Math.random()*8+6)+'px';p.style.height=(Math.random()*8+6)+'px';
+    p.style.animationDuration=(Math.random()*1.5+1.5)+'s';
+    p.style.animationDelay=(Math.random()*.5)+'s';
+    document.body.appendChild(p);setTimeout(()=>p.remove(),3000);
+  }
+}
+
+// Nav
+function showSlide(i){
+  document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
+  const slides=document.querySelectorAll('.slide');
+  if(slides[i])slides[i].classList.add('active');
+  cur=i;
+  document.getElementById('snum2').textContent=`${i+1} / ${total}`;
+  document.getElementById('pb').disabled=i===0;
+  document.getElementById('nb2').textContent=i===total-1?'Finish':'Next →';
+  document.getElementById('pf').style.width=((i+1)/total*100)+'%';
+  if(i===total-1){document.getElementById('fs').textContent=stars;document.getElementById('fa').textContent=acts;confetti();}
+}
+function nav(d){const n=cur+d;if(n>=0&&n<total)showSlide(n);}
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();nav(1);}if(e.key==='ArrowLeft'){e.preventDefault();nav(-1);}});
+function startOver(){stars=0;acts=0;sbIdx=0;sbCorrect=0;cfIdx=0;cfCorrect=0;mcSel={};document.getElementById('sn').textContent='0';build();}
+build();
+</script>
+</body>
+</html>

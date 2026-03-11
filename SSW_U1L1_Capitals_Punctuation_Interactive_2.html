@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSW Unit 1, Lesson 1: Capital Letters and End Punctuation</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--coral:#E66B5D;--coral-pale:#FDF0EE;--teal:#3A7D8C;--light-blue:#D7ECF0;--blue-pale:#EBF5F8;--yellow:#F3D25B;--yellow-dark:#9E7F0A;--white:#FFFFFF;--dark:#1A1A2E;--gray:#6B7280;--success:#22C55E;--error:#EF4444}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Open Sans',sans-serif;background:#F8FAFC;color:var(--dark);min-height:100vh;display:flex;flex-direction:column}
+.progress-bar{height:6px;background:#E5E7EB;position:fixed;top:0;left:0;right:0;z-index:100}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--coral));transition:width .4s ease}
+.star-counter{position:fixed;top:16px;right:20px;z-index:100;background:var(--white);border-radius:24px;padding:6px 16px;box-shadow:0 2px 8px rgba(0,0,0,.1);font-family:'Poppins',sans-serif;font-weight:400;font-size:16px;color:var(--yellow-dark);display:flex;align-items:center;gap:6px}
+.star-counter .star-icon{font-size:20px}
+.star-counter.animate .star-icon{animation:starPop .5s ease}
+@keyframes starPop{0%{transform:scale(1)}50%{transform:scale(1.5)}100%{transform:scale(1)}}
+.slide-container{flex:1;display:flex;align-items:center;justify-content:center;padding:60px 20px 100px}
+.slide{display:none;max-width:900px;width:100%;min-height:480px;background:var(--white);border-radius:20px;box-shadow:0 4px 24px rgba(0,0,0,.08);padding:48px;animation:fadeIn .4s ease}
+.slide.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.phase-label{display:inline-block;font-family:'Open Sans',sans-serif;font-weight:400;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:20px}
+.phase-learn{background:var(--light-blue);color:var(--teal)}
+.phase-practice{background:var(--coral-pale);color:var(--coral)}
+.phase-review{background:var(--blue-pale);color:var(--teal)}
+.slide h1{font-family:'Poppins',sans-serif;font-size:32px;font-weight:400;color:var(--teal);margin-bottom:12px;line-height:1.2}
+.slide h2{font-family:'Poppins',sans-serif;font-size:24px;font-weight:400;color:var(--dark);margin-bottom:16px}
+.slide h3{font-family:'Poppins',sans-serif;font-size:18px;font-weight:400;color:var(--coral);margin-bottom:12px}
+.slide p,.slide li{font-family:'Poppins',sans-serif;font-size:16px;line-height:1.6;color:var(--dark)}
+.subtitle{font-family:'Poppins',sans-serif;font-size:18px;color:var(--gray);margin-bottom:24px}
+.learning-goal{background:var(--light-blue);border-radius:12px;padding:16px 24px;font-family:'Poppins',sans-serif;font-size:16px;color:var(--teal);font-weight:500;margin-top:24px}
+.concept-big{font-family:'Poppins',sans-serif;font-size:72px;font-weight:400;color:var(--teal);text-align:center;margin:60px 0 20px}
+.concept-sub{font-family:'Poppins',sans-serif;font-size:20px;color:var(--gray);text-align:center}
+.strategy-grid{display:grid;gap:16px;margin-top:24px}
+.strategy-card{display:flex;align-items:center;gap:16px;background:var(--white);border:2px solid var(--light-blue);border-radius:14px;padding:16px 20px;transition:all .3s}
+.strategy-card:hover{border-color:var(--teal);box-shadow:0 2px 12px rgba(58,125,140,.15)}
+.strategy-letter{font-family:'Poppins',sans-serif;font-size:28px;font-weight:400;color:var(--white);background:var(--coral);width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.strategy-text{font-family:'Poppins',sans-serif;font-size:16px;color:var(--dark)}
+.strategy-text strong{color:var(--teal)}
+.endmark-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.endmark-card{background:var(--white);border:2px solid var(--light-blue);border-radius:14px;padding:24px 16px;text-align:center;transition:all .3s}
+.endmark-card:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.endmark-symbol{font-family:'Poppins',sans-serif;font-size:48px;font-weight:400;color:var(--coral);margin-bottom:8px}
+.endmark-name{font-family:'Poppins',sans-serif;font-size:16px;font-weight:400;color:var(--teal);margin-bottom:8px}
+.endmark-desc{font-family:'Poppins',sans-serif;font-size:13px;color:var(--gray)}
+.endmark-example{font-family:'Poppins',sans-serif;font-size:14px;color:var(--dark);font-style:italic;margin-top:10px;background:var(--blue-pale);border-radius:8px;padding:8px}
+.mc-options{display:grid;gap:12px;margin-top:20px}
+.mc-option{background:var(--white);border:2px solid #E5E7EB;border-radius:12px;padding:14px 20px;font-family:'Poppins',sans-serif;font-size:16px;cursor:pointer;transition:all .2s;text-align:left}
+.mc-option:hover{border-color:var(--teal);background:var(--blue-pale)}
+.mc-option.correct{border-color:var(--success);background:#F0FFF4;pointer-events:none}
+.mc-option.incorrect{border-color:var(--error);background:#FFF5F5;pointer-events:none}
+.mc-option.disabled{pointer-events:none;opacity:.7}
+.mc-feedback{margin-top:16px;padding:12px 20px;border-radius:10px;font-family:'Poppins',sans-serif;font-size:15px;font-weight:500;display:none}
+.mc-feedback.show{display:block}
+.mc-feedback.correct-fb{background:#F0FFF4;color:#166534;border:1px solid #86EFAC}
+.mc-feedback.incorrect-fb{background:#FFF5F5;color:#991B1B;border:1px solid #FCA5A5}
+.error-sentence{background:var(--blue-pale);border-radius:12px;padding:20px 24px;margin:16px 0;font-family:'Poppins',sans-serif;font-size:22px;text-align:center;min-height:60px;display:flex;align-items:center;justify-content:center;gap:2px;flex-wrap:wrap}
+.fix-options{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.fix-btn{background:var(--white);border:2px solid #E5E7EB;border-radius:10px;padding:10px 20px;font-family:'Poppins',sans-serif;font-size:16px;cursor:pointer;transition:all .2s}
+.fix-btn:hover{border-color:var(--teal);background:var(--blue-pale)}
+.fix-btn.selected{border-color:var(--teal);background:var(--light-blue)}
+.fix-btn.correct{border-color:var(--success);background:#F0FFF4}
+.fix-btn.incorrect{border-color:var(--error);background:#FFF5F5}
+.fix-btn.disabled{pointer-events:none;opacity:.6}
+.activity-counter{text-align:center;font-family:'Open Sans',sans-serif;font-size:13px;color:var(--gray);margin-bottom:12px}
+.check-btn{display:block;margin:20px auto 0;background:var(--teal);color:white;border:none;border-radius:12px;padding:12px 32px;font-family:'Poppins',sans-serif;font-size:16px;font-weight:400;cursor:pointer;transition:all .2s}
+.check-btn:hover{background:#2D6470;transform:translateY(-1px)}
+.check-btn:disabled{background:#CBD5E1;cursor:not-allowed;transform:none}
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.review-card{background:var(--white);border-radius:14px;padding:24px;cursor:pointer;transition:all .3s;text-align:center;min-height:120px;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.review-card.rc-teal{border:2px solid var(--teal)}
+.review-card.rc-coral{border:2px solid var(--coral)}
+.review-card.rc-yellow{border:2px solid var(--yellow)}
+.review-card.rc-blue{border:2px solid var(--light-blue)}
+.review-card .rc-question{font-family:'Poppins',sans-serif;font-size:15px;font-weight:400;color:var(--dark)}
+.review-card .rc-answer{display:none;font-family:'Poppins',sans-serif;font-size:14px;color:var(--teal);margin-top:12px;padding-top:12px;border-top:1px solid #E5E7EB}
+.review-card.flipped .rc-answer{display:block}
+.review-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.celebration-title{font-family:'Poppins',sans-serif;font-size:36px;font-weight:400;color:var(--teal);text-align:center;margin-bottom:8px}
+.celebration-sub{font-family:'Poppins',sans-serif;font-size:18px;color:var(--gray);text-align:center;margin-bottom:32px}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.stat-card{background:var(--blue-pale);border-radius:14px;padding:20px;text-align:center}
+.stat-number{font-family:'Poppins',sans-serif;font-size:36px;font-weight:400;color:var(--teal)}
+.stat-label{font-family:'Poppins',sans-serif;font-size:13px;color:var(--gray);margin-top:4px}
+.restart-btn{display:block;margin:0 auto;background:var(--coral);color:white;border:none;border-radius:12px;padding:14px 36px;font-family:'Poppins',sans-serif;font-size:16px;font-weight:400;cursor:pointer;transition:all .2s}
+.restart-btn:hover{background:#D45A4D}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--white);box-shadow:0 -2px 12px rgba(0,0,0,.06);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100}
+.nav-btn{background:var(--teal);color:white;border:none;border-radius:10px;padding:10px 24px;font-family:'Open Sans',sans-serif;font-size:15px;font-weight:400;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px}
+.nav-btn:hover{background:#2D6470}
+.nav-btn:disabled{background:#CBD5E1;cursor:not-allowed}
+.slide-counter{font-family:'Open Sans',sans-serif;font-size:14px;color:var(--gray)}
+@media(max-width:700px){.slide{padding:28px 20px}.slide h1{font-size:24px}.concept-big{font-size:48px}.endmark-grid{grid-template-columns:1fr}.review-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr}}
+@media(max-width:500px){.slide{padding:20px 16px;min-height:auto}.nav-btn{padding:8px 16px;font-size:14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="star-counter" id="starCounter"><span class="star-icon">⭐</span><span id="starCount">0</span></div>
+<div class="slide-container">
+
+<!-- SLIDE 1: Title -->
+<div class="slide active" id="slide-1">
+  <span class="phase-label phase-learn">LEARN</span>
+  <p style="font-family:'Open Sans';font-size:13px;color:var(--gray);margin-bottom:8px;">Structured Steps to Writing • Unit 1: Building Basic Sentences</p>
+  <h1>Lesson 1: Capital Letters and End Punctuation</h1>
+  <p class="subtitle">Every sentence needs bookends!</p>
+  <div class="learning-goal"><strong>🎯 Learning Goal:</strong> I can start my sentences with capital letters and end them with the correct punctuation.</div>
+</div>
+
+<!-- SLIDE 2: Concept Intro -->
+<div class="slide" id="slide-2">
+  <span class="phase-label phase-learn">LEARN</span>
+  <div class="concept-big">CAPS</div>
+  <p class="concept-sub">Your strategy for perfect sentences</p>
+</div>
+
+<!-- SLIDE 3: Quick Check MC -->
+<div class="slide" id="slide-3">
+  <span class="phase-label phase-learn">LEARN</span>
+  <h2>🔍 Quick Check: Which Is a Sentence?</h2>
+  <p style="margin-bottom:16px;font-family:'Poppins',sans-serif;font-size:15px;color:var(--gray);">One of these looks like a proper sentence. Which one?</p>
+  <div class="mc-options" id="mc1">
+    <div class="mc-option" onclick="checkMC(this,'mc1',false)">the dog ran fast</div>
+    <div class="mc-option" onclick="checkMC(this,'mc1',true)">The dog ran fast.</div>
+    <div class="mc-option" onclick="checkMC(this,'mc1',false)">The dog ran fast</div>
+    <div class="mc-option" onclick="checkMC(this,'mc1',false)">the dog ran fast.</div>
+  </div>
+  <div class="mc-feedback" id="mc1-feedback"></div>
+</div>
+
+<!-- SLIDE 4: CAPS Strategy -->
+<div class="slide" id="slide-4">
+  <span class="phase-label phase-learn">LEARN</span>
+  <h2>The CAPS Strategy</h2>
+  <p style="font-family:'Poppins',sans-serif;font-size:15px;color:var(--gray);margin-bottom:8px;">Every sentence needs CAPS!</p>
+  <div class="strategy-grid">
+    <div class="strategy-card"><div class="strategy-letter">C</div><div class="strategy-text"><strong>Capital letter</strong> starts the sentence</div></div>
+    <div class="strategy-card"><div class="strategy-letter">A</div><div class="strategy-text"><strong>All the words</strong> in between</div></div>
+    <div class="strategy-card"><div class="strategy-letter">P</div><div class="strategy-text"><strong>Punctuation</strong> ends the sentence</div></div>
+    <div class="strategy-card"><div class="strategy-letter">S</div><div class="strategy-text"><strong>Stop and check</strong></div></div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Three End Marks -->
+<div class="slide" id="slide-5">
+  <span class="phase-label phase-learn">LEARN</span>
+  <h2>Three End Marks</h2>
+  <div class="endmark-grid">
+    <div class="endmark-card"><div class="endmark-symbol">.</div><div class="endmark-name">Period</div><div class="endmark-desc">Telling / Statement</div><div class="endmark-example">The sky is blue.</div></div>
+    <div class="endmark-card"><div class="endmark-symbol">?</div><div class="endmark-name">Question Mark</div><div class="endmark-desc">Asking</div><div class="endmark-example">What is your name?</div></div>
+    <div class="endmark-card"><div class="endmark-symbol">!</div><div class="endmark-name">Exclamation Point</div><div class="endmark-desc">Strong Feeling</div><div class="endmark-example">That’s amazing!</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 6: MC - Punctuation Check -->
+<div class="slide" id="slide-6">
+  <span class="phase-label phase-practice">PRACTICE</span>
+  <h2>✅ Pick the Right Punctuation</h2>
+  <p style="margin-bottom:8px;font-family:'Poppins',sans-serif;font-size:15px;color:var(--gray);">What punctuation should end this sentence?</p>
+  <div class="error-sentence" id="puncSentence">Where is my backpack</div>
+  <div class="activity-counter" id="puncCounter">Sentence 1 of 4</div>
+  <div class="fix-options" id="puncOptions"></div>
+  <div class="mc-feedback" id="puncFeedback"></div>
+</div>
+
+<!-- SLIDE 7: Error Finder -->
+<div class="slide" id="slide-7">
+  <span class="phase-label phase-practice">PRACTICE</span>
+  <h2>🔧 Fix It! Use CAPS</h2>
+  <p style="margin-bottom:8px;font-family:'Poppins',sans-serif;font-size:15px;color:var(--gray);">Each sentence has an error. Pick the correct version!</p>
+  <div class="activity-counter" id="fixCounter">Sentence 1 of 4</div>
+  <div class="error-sentence" id="fixSentence"></div>
+  <div class="mc-options" id="fixOptions"></div>
+  <div class="mc-feedback" id="fixFeedback"></div>
+</div>
+
+<!-- SLIDE 8: Tricky Concepts -->
+<div class="slide" id="slide-8">
+  <span class="phase-label phase-learn">LEARN</span>
+  <h2>⚠️ Watch Out!</h2>
+  <h3>Common Mistakes</h3>
+  <div style="display:grid;gap:14px;margin-top:16px;">
+    <div style="background:var(--coral-pale);border-radius:12px;padding:16px 20px;">
+      <p style="font-size:15px;"><span style="color:var(--error);font-weight:400;">✗</span> <span style="text-decoration:line-through;">the dog barked.</span></p>
+      <p style="font-size:15px;"><span style="color:var(--success);font-weight:400;">✓</span> <strong>T</strong>he dog barked.</p>
+      <p style="font-size:13px;color:var(--gray);margin-top:4px;">Always start with a capital!</p>
+    </div>
+    <div style="background:var(--coral-pale);border-radius:12px;padding:16px 20px;">
+      <p style="font-size:15px;"><span style="color:var(--error);font-weight:700;">✗</span> <span style="text-decoration:line-through;">The dog barked</span></p>
+      <p style="font-size:15px;"><span style="color:var(--success);font-weight:700;">✓</span> The dog barked<strong>.</strong></p>
+      <p style="font-size:13px;color:var(--gray);margin-top:4px;">Always end with punctuation!</p>
+    </div>
+    <div style="background:var(--coral-pale);border-radius:12px;padding:16px 20px;">
+      <p style="font-size:15px;"><span style="color:var(--error);font-weight:700;">✗</span> I like pizza<strong>!</strong> <span style="font-size:13px;color:var(--gray);">(unless you REALLY love pizza)</span></p>
+      <p style="font-size:15px;"><span style="color:var(--success);font-weight:700;">✓</span> I like pizza<strong>.</strong></p>
+      <p style="font-size:13px;color:var(--gray);margin-top:4px;">Save exclamation points for real strong feelings!</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: Review Cards -->
+<div class="slide" id="slide-9">
+  <span class="phase-label phase-review">REVIEW</span>
+  <h2>📝 Let’s Review!</h2>
+  <p style="margin-bottom:8px;font-family:'Poppins',sans-serif;font-size:15px;color:var(--gray);">Click each card to reveal the answer.</p>
+  <div class="review-grid">
+    <div class="review-card rc-teal" onclick="this.classList.toggle('flipped')">
+      <div class="rc-question">What does CAPS stand for?</div>
+      <div class="rc-answer">Capital letter, All the words, Punctuation, Stop and check</div>
+    </div>
+    <div class="review-card rc-coral" onclick="this.classList.toggle('flipped')">
+      <div class="rc-question">When do you use a period?</div>
+      <div class="rc-answer">When you’re making a statement – telling information calmly.</div>
+    </div>
+    <div class="review-card rc-yellow" onclick="this.classList.toggle('flipped')">
+      <div class="rc-question">When do you use a question mark?</div>
+      <div class="rc-answer">When you’re asking something – your voice goes up!</div>
+    </div>
+    <div class="review-card rc-blue" onclick="this.classList.toggle('flipped')">
+      <div class="rc-question">When should you use an exclamation point?</div>
+      <div class="rc-answer">Only for strong feelings – excitement, surprise, fear. Don’t overuse them!</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Celebration -->
+<div class="slide" id="slide-10">
+  <div class="celebration-title">🎉 Amazing Work!</div>
+  <div class="celebration-sub">You’ve completed Lesson 1: Capital Letters and End Punctuation!</div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-number" id="finalStars">0</div><div class="stat-label">Stars Earned</div></div>
+    <div class="stat-card"><div class="stat-number" id="finalActivities">0</div><div class="stat-label">Activities Done</div></div>
+    <div class="stat-card"><div class="stat-number">CAPS</div><div class="stat-label">Strategy Learned</div></div>
+  </div>
+  <button class="restart-btn" onclick="startOver()">🔄 Start Over</button>
+</div>
+
+</div><!-- end slide-container -->
+
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>← Back</button>
+  <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">10</span></span>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+// ─── Data ───
+const L = {
+  puncSentences: [
+    { text: "Where is my backpack", answer: "?", feedback: "It’s a question – your voice goes up!" },
+    { text: "We won the game", answer: "!", feedback: "That’s exciting – strong feeling!" },
+    { text: "The sun is bright today", answer: ".", feedback: "It’s a calm statement – period!" },
+    { text: "Do you like apples", answer: "?", feedback: "You’re asking – question mark!" },
+  ],
+  fixSentences: [
+    { display: "the cat is sleeping.", options: ["the cat is sleeping.", "The cat is sleeping.", "The cat is sleeping!", "the Cat is sleeping."], correct: 1 },
+    { display: "Birds can fly", options: ["Birds can fly", "birds can fly.", "Birds can fly.", "Birds Can Fly."], correct: 2 },
+    { display: "how old are you.", options: ["How old are you.", "how old are you?", "How old are you?", "How Old Are You?"], correct: 2 },
+    { display: "watch out for that car", options: ["Watch out for that car.", "watch out for that car!", "Watch out for that car!", "Watch Out For That Car!"], correct: 2 },
+  ],
+};
+
+// ─── State ───
+let currentSlideNum = 1;
+const totalSlides = 10;
+let stars = 0;
+let activitiesDone = 0;
+let puncIndex = 0;
+let fixIndex = 0;
+
+// ─── Navigation ───
+function changeSlide(dir) {
+  const next = currentSlideNum + dir;
+  if (next < 1 || next > totalSlides) return;
+  document.getElementById('slide-' + currentSlideNum).classList.remove('active');
+  currentSlideNum = next;
+  document.getElementById('slide-' + currentSlideNum).classList.add('active');
+  updateNav();
+  if (currentSlideNum === 6) loadPuncActivity();
+  if (currentSlideNum === 7) loadFixActivity();
+  if (currentSlideNum === 10) showCelebration();
+}
+
+function updateNav() {
+  document.getElementById('currentSlide').textContent = currentSlideNum;
+  document.getElementById('prevBtn').disabled = currentSlideNum === 1;
+  document.getElementById('nextBtn').disabled = currentSlideNum === totalSlides;
+  document.getElementById('progressFill').style.width = ((currentSlideNum / totalSlides) * 100) + '%';
+}
+
+// Keyboard nav
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+});
+
+// ─── Stars ───
+function addStars(n) {
+  stars += n;
+  document.getElementById('starCount').textContent = stars;
+  const sc = document.getElementById('starCounter');
+  sc.classList.add('animate');
+  setTimeout(() => sc.classList.remove('animate'), 500);
+}
+
+// ─── Multiple Choice ───
+function checkMC(el, id, isCorrect) {
+  const options = document.querySelectorAll('#' + id + ' .mc-option');
+  const fb = document.getElementById(id + '-feedback');
+  options.forEach(o => o.classList.add('disabled'));
+  if (isCorrect) {
+    el.classList.add('correct');
+    fb.textContent = '✓ Correct! This sentence has a capital letter AND a period.';
+    fb.className = 'mc-feedback show correct-fb';
+    addStars(1);
+    activitiesDone++;
+  } else {
+    el.classList.add('incorrect');
+    // highlight correct
+    options.forEach(o => { if (o.textContent === 'The dog ran fast.') o.classList.add('correct'); });
+    fb.textContent = '✗ Not quite. A proper sentence needs a capital letter at the start AND punctuation at the end.';
+    fb.className = 'mc-feedback show incorrect-fb';
+  }
+}
+
+// ─── Punctuation Activity ───
+function loadPuncActivity() {
+  if (puncIndex >= L.puncSentences.length) return;
+  const item = L.puncSentences[puncIndex];
+  document.getElementById('puncSentence').textContent = item.text;
+  document.getElementById('puncCounter').textContent = 'Sentence ' + (puncIndex + 1) + ' of ' + L.puncSentences.length;
+  document.getElementById('puncFeedback').className = 'mc-feedback';
+  const optDiv = document.getElementById('puncOptions');
+  optDiv.innerHTML = '';
+  ['.', '?', '!'].forEach(mark => {
+    const btn = document.createElement('button');
+    btn.className = 'fix-btn';
+    btn.textContent = mark;
+    btn.style.fontSize = '24px';
+    btn.style.minWidth = '60px';
+    btn.onclick = () => checkPunc(btn, mark, item);
+    optDiv.appendChild(btn);
+  });
+}
+
+function checkPunc(btn, mark, item) {
+  const fb = document.getElementById('puncFeedback');
+  const btns = document.querySelectorAll('#puncOptions .fix-btn');
+  btns.forEach(b => b.classList.add('disabled'));
+  if (mark === item.answer) {
+    btn.classList.add('correct');
+    fb.textContent = '✓ ' + item.feedback;
+    fb.className = 'mc-feedback show correct-fb';
+    addStars(1);
+    activitiesDone++;
+  } else {
+    btn.classList.add('incorrect');
+    btns.forEach(b => { if (b.textContent === item.answer) b.classList.add('correct'); });
+    fb.textContent = '✗ The correct answer is ' + item.answer + ' – ' + item.feedback;
+    fb.className = 'mc-feedback show incorrect-fb';
+  }
+  puncIndex++;
+  if (puncIndex < L.puncSentences.length) {
+    setTimeout(loadPuncActivity, 1500);
+  }
+}
+
+// ─── Fix It Activity ───
+function loadFixActivity() {
+  if (fixIndex >= L.fixSentences.length) return;
+  const item = L.fixSentences[fixIndex];
+  document.getElementById('fixSentence').textContent = item.display;
+  document.getElementById('fixCounter').textContent = 'Sentence ' + (fixIndex + 1) + ' of ' + L.fixSentences.length;
+  document.getElementById('fixFeedback').className = 'mc-feedback';
+  const optDiv = document.getElementById('fixOptions');
+  optDiv.innerHTML = '';
+  item.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'mc-option';
+    div.textContent = opt;
+    div.onclick = () => checkFix(div, i, item);
+    optDiv.appendChild(div);
+  });
+}
+
+function checkFix(el, idx, item) {
+  const fb = document.getElementById('fixFeedback');
+  const opts = document.querySelectorAll('#fixOptions .mc-option');
+  opts.forEach(o => o.classList.add('disabled'));
+  if (idx === item.correct) {
+    el.classList.add('correct');
+    fb.textContent = '✓ Perfect! That sentence has CAPS!';
+    fb.className = 'mc-feedback show correct-fb';
+    addStars(2);
+    activitiesDone++;
+  } else {
+    el.classList.add('incorrect');
+    opts[item.correct].classList.add('correct');
+    fb.textContent = '✗ Close! The correct version is: ' + item.options[item.correct];
+    fb.className = 'mc-feedback show incorrect-fb';
+  }
+  fixIndex++;
+  if (fixIndex < L.fixSentences.length) {
+    setTimeout(loadFixActivity, 1500);
+  }
+}
+
+// ─── Celebration ───
+function showCelebration() {
+  document.getElementById('finalStars').textContent = stars;
+  document.getElementById('finalActivities').textContent = activitiesDone;
+  fireConfetti();
+}
+
+function fireConfetti() {
+  const colors = ['#E66B5D', '#3A7D8C', '#F3D25B', '#D7ECF0', '#22C55E'];
+  for (let i = 0; i < 60; i++) {
+    const piece = document.createElement('div');
+    piece.style.cssText = 'position:fixed;width:' + (6 + Math.random() * 8) + 'px;height:' + (6 + Math.random() * 8) + 'px;background:' + colors[Math.floor(Math.random() * colors.length)] + ';border-radius:' + (Math.random() > 0.5 ? '50%' : '2px') + ';left:' + (Math.random() * 100) + 'vw;top:-20px;z-index:200;pointer-events:none;opacity:1;';
+    document.body.appendChild(piece);
+    const duration = 2000 + Math.random() * 2000;
+    const drift = (Math.random() - 0.5) * 200;
+    piece.animate([
+      { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+      { transform: 'translateY(' + (window.innerHeight + 50) + 'px) translateX(' + drift + 'px) rotate(' + (Math.random() * 720) + 'deg)', opacity: 0 }
+    ], { duration, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }).onfinish = () => piece.remove();
+  }
+}
+
+// ─── Start Over ───
+function startOver() {
+  stars = 0; activitiesDone = 0; puncIndex = 0; fixIndex = 0;
+  document.getElementById('starCount').textContent = '0';
+  // Reset MC
+  document.querySelectorAll('.mc-option').forEach(o => { o.classList.remove('correct', 'incorrect', 'disabled'); });
+  document.querySelectorAll('.mc-feedback').forEach(f => { f.className = 'mc-feedback'; });
+  // Reset review cards
+  document.querySelectorAll('.review-card').forEach(c => c.classList.remove('flipped'));
+  // Go to slide 1
+  document.getElementById('slide-' + currentSlideNum).classList.remove('active');
+  currentSlideNum = 1;
+  document.getElementById('slide-1').classList.add('active');
+  updateNav();
+}
+
+// Init
+updateNav();
+</script>
+</body>
+</html>
